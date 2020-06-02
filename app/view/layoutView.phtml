@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $this->getTitle(); ?></title>
+    <link rel="stylesheet" href="<?= $this->assetsPath; ?>css/style.css">
+    <script src="<?= $this->assetsPath; ?>js/jquery-2.2.4/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <a href="#"><img src="<?= $this->assetsPath; ?>img/site/logoBrand.jpg" alt=""></a>
+        
+        <button class="btn">Menu <span></span></button>
+        <nav>
+            <ul>
+                <li>
+                    <a href="salon-de-coiffure">salon de coiffure</a>
+                </li>
+                <li>
+                    <a href="nos-horaire">Infos horaires</a>
+                </li>
+                <li>
+                    <a href="tarif">lyon en photos</a>
+                </li>
+                <li>
+                    <a href="contact">contactez-nous</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="banner"></div>
+<?= $content; ?>
+
+<script src="<?= $this->assetsPath; ?>js/main.js"></script>
+</body>
+</html>
