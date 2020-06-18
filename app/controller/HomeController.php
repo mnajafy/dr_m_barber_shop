@@ -9,6 +9,6 @@ class HomeController extends Controller
     public function home()
     {
         $this->setTitle('home');
-        return $this->render('index');
+        return $this->render('home');
     }
 }

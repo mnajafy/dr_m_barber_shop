@@ -3,34 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="<?= $this->assetsPath; ?>img/site/logoBrand.jpg" />
     <title><?= $this->getTitle(); ?></title>
+
+    <!-- style css -->
     <link rel="stylesheet" href="<?= $this->assetsPath; ?>css/style.css">
-    <script src="<?= $this->assetsPath; ?>js/jquery-2.2.4/jquery.min.js"></script>
+
+    <!-- font-awesome/5.12.0-2 css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+
+    <!-- jQuery-3.5.1 -->
+    <script src="<?= $this->assetsPath; ?>js/jquery-3.5.1/jquery.js"></script>
 </head>
 <body>
+    <!-- header -->
     <header>
-        <a href="#"><img src="<?= $this->assetsPath; ?>img/site/logoBrand.jpg" alt=""></a>
-        
-        <button class="btn">Menu <span></span></button>
         <nav>
-            <ul>
-                <li>
-                    <a href="salon-de-coiffure">salon de coiffure</a>
-                </li>
-                <li>
-                    <a href="nos-horaire">Infos horaires</a>
-                </li>
-                <li>
-                    <a href="tarif">lyon en photos</a>
-                </li>
-                <li>
-                    <a href="contact">contactez-nous</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div class="banner"></div>
-<?= $content; ?>
+            <a class="nav-brand" href="#"><img src="<?= $this->assetsPath; ?>img/site/logoBrand.jpg" alt=""></a>
+            <button class="dropdown-bars">Menu <span></span></button>
+
+            <div class="navbar-collapse">
+                <ul>
+                    <li>
+                        <a class="nav-link" href="contact">
+                            <i class="fas fa-mobile-alt"></i>
+                            contactez-nous
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="nos-horaire">
+                            <i class="fas fa-clock"></i> 
+                            Infos horaires
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="salon-de-coiffure">
+                            <i class="fas fa-store-alt"></i>
+                            salon de coiffure
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="tarif">
+                            <i class="fas fa-images"></i>
+                            lyon en photos
+                        </a>
+                    </li>
+                </ul>
+            </div> <!-- end navbar collapse -->
+        </nav> <!-- end nav -->
+    </header> <!-- end header -->
+
+    <!-- banner -->
+    <?php if ($this->getTitle() === 'home'): ?>
+    <div class="banner">
+        <img src="<?= $this->assetsPath; ?>img/site/banner.jpg" alt="">
+    </div> <!-- end banner -->
+    <?php else: ?>
+    <div class="banner banner-other">
+        <div class="row">
+            <div class="col-5">
+                <ol>
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item">error</li>
+                </ol>
+            </div>
+        </div> <!-- end row -->
+    </div> <!-- end banner other -->
+    <?php endif ?>
+
+    <main>
+        <?= $content; ?>
+    </main> <!-- end main -->
+
+    <footer>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 social-network py-1">
+                        <div class="section-title">
+                            <h5>Retrouvez nous egalement</h5>
+                            <hr>
+                        </div>
+                        <ul>
+                            <li><a class="btn btn-outline-brown rounded-circle mr-4" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a class="btn btn-outline-brown rounded-circle mr-4" href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li><a class="btn btn-outline-brown rounded-circle mr-4" href="#"><i class="fab fa-telegram-plane"></i></a></li>
+                            <li><a class="btn btn-outline-brown rounded-circle mr-4" href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div> <!-- end col-4 -->
+                    <div class="col-4  working-hours py-1">
+                        <div class="section-title">
+                            <h5>WORKING HOURS</h5>
+                            <hr>
+                        </div>
+                        <ul>
+                            <li>
+                                <span>Lundi</span>
+                                <small>12:30 - 19:30</small>
+                            </li>
+                            <li>
+                                <span>mardi</span>
+                                <small>09:30 - 19:30</small>
+                            </li>
+                            <li>
+                                <span>mercredi</span>
+                                <small>09:00 - 20:00</small>
+                            </li>
+                            <li>
+                                <span>jeudi</span>
+                                <small>09:30 - 19:30</small>
+                            </li>
+                            <li>
+                                <span>vendredi</span>
+                                <small>09:30 - 19:30</small>
+                            </li>
+                            <li>
+                                <span>samedi</span>
+                                <small>09:30 - 19:30</small>
+                            </li>
+                            <li>
+                                <span>dimenche</span>
+                                <small>Closed</small>
+                            </li>
+                        </ul>
+                    </div> <!-- end col-3 -->
+                    <div class="col-4 py-1 adresse">
+                        <div class="section-title">
+                            <h5>WORKING HOURS</h5>
+                            <hr>
+                        </div>
+                        <p class="m-0">Dr.M BarberShop</p>
+                        <p class="m-0">132 Avenue Thiers</p>
+                        <p>69006 Lyon <a class="text-green p-0 small" href="https://goo.gl/maps/BQr3qvoczHfyrUUD8" target="_blank" rel="noopener noreferrer">ici</a> .</p>
+                        <a href="tel:0983868415"class="btn btn-outline-brown" ><i class="fas fa-phone-alt"></i> : +33 9 83 86 84 15</a>
+                        <a href="mailto:m.najafy@hotmail.com" class="btn btn-outline-brown"><i class="fas fa-envelope"></i> : Dr M. Barber Shop</a>
+                    </div> <!-- end col-5 -->
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </div> <!-- end section -->
+        <p class="copyright">&copy 2020<a href="mailto:m.najafy@hotmail.com">m.najafy@hotmail.com</a></p>
+    </footer> <!-- end footer -->
 
 <script src="<?= $this->assetsPath; ?>js/main.js"></script>
 </body>
