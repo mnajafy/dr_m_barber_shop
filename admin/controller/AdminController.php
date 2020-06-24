@@ -1,10 +1,7 @@
 <?php
+namespace Admin\Controller;
 
-namespace Core;
-
-use App\Controller\ErrorController;
-
-class Controller
+class AdminController
 {
     private $title = "Hello world !";
     public $assetsPath = 'http://localhost/dr_m_barber_shop/app/assets/';
@@ -44,5 +41,4 @@ class Controller
         return $this->title;
     }
 }
-
 ?>

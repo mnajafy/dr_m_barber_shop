@@ -19,31 +19,31 @@
     <!-- header -->
     <header>
         <nav>
-            <a class="nav-brand" href="#"><img src="<?= $this->assetsPath; ?>img/site/logoBrand.jpg" alt=""></a>
+            <a class="nav-brand" href="<?= $this->link(); ?>"><img src="<?= $this->assetsPath; ?>img/site/logoBrand.jpg" alt=""></a>
             <button class="dropdown-bars">Menu <span></span></button>
 
             <div class="navbar-collapse">
                 <ul>
                     <li>
-                        <a class="nav-link" href="contact">
+                        <a class="nav-link" href="<?= $this->link('hairdresser#contactez-nous'); ?>">
                             <i class="fas fa-mobile-alt"></i>
                             contactez-nous
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="nos-horaire">
+                        <a class="nav-link" href="<?= $this->link('hairdresser#nos-horaire'); ?>">
                             <i class="fas fa-clock"></i> 
                             Infos horaires
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="salon-de-coiffure">
+                        <a class="nav-link" href="<?= $this->link('hairdresser'); ?>">
                             <i class="fas fa-store-alt"></i>
                             salon de coiffure
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="tarif">
+                        <a class="nav-link" href="<?= $this->link('gallery'); ?>">
                             <i class="fas fa-images"></i>
                             lyon en photos
                         </a>

@@ -1,7 +1,8 @@
 <?php
+
 namespace Core;
 
-use Core\Error\ErrorController;
+use App\Controller\ErrorController;
 
 class UrlManager
 {
@@ -19,7 +20,7 @@ class UrlManager
     {
         if (isset($_GET['url'])) 
         {
-            $this->url = trim($_GET['url'], '/') ;
+            $this->url = trim($_GET['url'], '/');
         }
         else
         {
@@ -29,13 +30,14 @@ class UrlManager
 
     public function run()
     {
-        foreach ($this->rules as $name => $classAction) {
+        foreach ($this->rules as $name => $classAction) 
+        {
             if($this->match($this->url, $name))
             {
                 return $this->call($classAction, $this->matches);
             }
         }
-        (new ErrorController())->urlManagerError(['Error : 404', 'Url : '. ROOT . $this->url . ' Not fond!']);
+        (new ErrorController())->urlManagerError( ROOT . $this->url );
     }
 
     private function match($url, $name)
@@ -52,7 +54,6 @@ class UrlManager
         array_shift($matches);
 
         $this->matches = $matches;
-
         return true;
     }
 
@@ -64,7 +65,7 @@ class UrlManager
             $action = $classAction[1];
             return call_user_func_array([$class, $action], $matches);
         }
-        (new ErrorController())->urlManagerError(['Error : 403', 'Le'.implode(',', $classAction) . 'Not FOND']);
+        (new ErrorController())->urlManagerError(implode('->', $classAction));
     }
 }
 

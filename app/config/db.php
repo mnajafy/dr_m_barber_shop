@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'dsn' => 'mysql:host=localhost;dbname=DR_M_BARBER_SHOP',
+    'dsn' => 'mysql:host=localhost;dbname=drmbarbershop;',
     'username' => 'root',
     'password' => '',
-    'charset' => 'utf8',
+    'charset' => 'charset=utf8;',
 ];
 
 ?>
