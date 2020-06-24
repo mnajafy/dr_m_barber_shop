@@ -11,7 +11,7 @@ class Gallery extends Model
     {
         if ($value)
         {
-            return Db::prepare('SELECT imgs.id, imgs.img, imgs.content, category.id as categoryurl, category.title as categorie 
+            return Db::prepare('SELECT imgs.id, imgs.img, imgs.content, category.id as categoryurl, category.title as categoryTitle 
                                 FROM imgs 
                                 LEFT JOIN category 
                                 ON category_id = category.id 
@@ -45,7 +45,7 @@ class Gallery extends Model
 
     public function getLinkCategoryId()
     {
-        return 'http://localhost/dr_m_barber_shop/category/' . $this->categoryId;   
+        return 'http://localhost/dr_m_barber_shop/category/' . $this->categoryTitle;   
     }
 }
 
