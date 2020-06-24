@@ -47,12 +47,6 @@ class Gallery extends Model
     {
         return 'http://localhost/dr_m_barber_shop/category/' . $this->categoryId;   
     }
-
-    public function getCategoryTitle()
-    {
-        return 'http://localhost/dr_m_barber_shop/category/' . $this->
-        ;   
-    }
 }
 
 ?>
