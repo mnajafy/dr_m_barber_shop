@@ -1,16 +1,15 @@
 <?php
-
-class Autoloader 
-{
-    static function register()
-    {
+class Autoloader {
+    static function register() {
         spl_autoload_register([__CLASS__, 'autoload']);
     }
-
-    static function autoload($class_name)
-    {
-        require $class_name . '.php';
+    static function autoload($name) {
+        $filename = str_replace('\\', '/', $name) . '.php';
+        if (file_exists($filename)) {
+            require $filename;
+        }
     }
 }
 
-?>
+require 'Framework.php';
+Autoloader::register();

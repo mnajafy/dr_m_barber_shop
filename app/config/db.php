@@ -1,10 +1,8 @@
 <?php
-
 return [
-    'dsn' => 'mysql:host=localhost;dbname=drmbarbershop;',
+    'class'    => '\Core\Database',
+    'dsn'      => 'mysql:host=localhost;dbname=drmbarbershop',
     'username' => 'root',
-    'password' => '',
-    'charset' => 'charset=utf8;',
+    'password' => 'SecreT1!',
+    'charset'  => 'utf8',
 ];
-
-?>

@@ -1,72 +1,56 @@
 <?php
-
 namespace Core;
-
-use App\Controller\ErrorController;
-
-class UrlManager
-{
-    private $url;
-    private $rules = [];
-    private $matches = [];
-
-    public function __construct($rules)
-    {
-        $this->url();
-        $this->rules = $rules;
-    }
-
-    private function url()
-    {
-        if (isset($_GET['url'])) 
-        {
-            $this->url = trim($_GET['url'], '/');
-        }
-        else
-        {
-            $this->url = '/';
-        }
-    }
-
-    public function run()
-    {
-        foreach ($this->rules as $name => $classAction) 
-        {
-            if($this->match($this->url, $name))
-            {
-                return $this->call($classAction, $this->matches);
+use Exception;
+/**
+ * UrlManager
+ * @property array $rules
+ * @property array $params
+ */
+class UrlManager extends BaseObject {
+    /**
+     * @param Request $request
+     */
+    public function resolve($request) {
+        $route = null;
+        $url   = ($request->get('r') === null ? '/' : trim($request->get('r'), '/'));
+        foreach ($this->rules as $key => $value) {
+            if ($this->match($url, $key)) {
+                $route = $value;
+                break;
             }
         }
-        (new ErrorController())->urlManagerError( ROOT . $this->url );
+        if ($route === null) {
+            throw new Exception('request page not found!');
+        }
+        $params = $request->merge($this->params);
+        return [$route, $params];
     }
-
-    private function match($url, $name)
-    {
-        $name = preg_replace('#{([\w]+)}#', '([^/]+)', $name);
-
-        $regex = "#^$name$#i";
-        
-        if (!preg_match($regex, $url, $matches)) 
-        {
+    /**
+     * @param string $url
+     * @param string $key
+     * @return bool
+     */
+    public function match($url, $key) {
+        $name    = preg_replace('#{([\w]+)}#', '([^/]+)', $key);
+        $regex   = "#^$name$#i";
+        $matches = [];
+        if (!preg_match($regex, $url, $matches)) {
             return false;
         }
-        
-        array_shift($matches);
 
-        $this->matches = $matches;
+        $keys  = [];
+        $items = [];
+        preg_match_all('#{([\w]+)}#', $key, $items);
+        if ($items[1]) {
+            $keys = $items[1];
+        }
+
+        $params = [];
+        array_shift($matches);
+        foreach ($matches as $index => $value) {
+            $params[$keys[$index]] = $value;
+        }
+        $this->params = $params;
         return true;
     }
-
-    private function call($classAction, $matches)
-    {
-        if(is_callable($classAction))
-        {
-            $class = new $classAction[0]();
-            $action = $classAction[1];
-            return call_user_func_array([$class, $action], $matches);
-        }
-        (new ErrorController())->urlManagerError(implode('->', $classAction));
-    }
 }
-
-?>

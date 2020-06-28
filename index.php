@@ -1,5 +1,4 @@
 <?php
-define('ROOT', __DIR__ . '/');
-require 'core/App.php';
-(new Core\App())->load();
-?>
+require 'core/Autoloader.php';
+$config = require 'app/config/config.php';
+(new \Core\App($config))->run();
