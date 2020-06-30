@@ -1,7 +1,10 @@
 <?php
 /* @var $this \Core\View */
 /* @var $model \App\Model\Gallery */
-$this->title = 'single';
+$this->title = 'Single';
+$this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['home/index']];
+$this->params['breadcrumb'][] = ['label' => 'Gallery', 'url' => ['gallery/index']];
+$this->params['breadcrumb'][] = 'Single';
 ?>
 <section class="section">
     <div class="container">

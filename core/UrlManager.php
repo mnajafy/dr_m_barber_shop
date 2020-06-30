@@ -4,9 +4,12 @@ use Exception;
 /**
  * UrlManager
  * @property array $rules
- * @property array $params
  */
 class UrlManager extends BaseObject {
+    /**
+     * @var array
+     */
+    private $_params;
     /**
      * @param Request $request
      */
@@ -22,7 +25,7 @@ class UrlManager extends BaseObject {
         if ($route === null) {
             throw new Exception('request page not found!');
         }
-        $params = $request->merge($this->params);
+        $params = $request->merge($this->_params);
         return [$route, $params];
     }
     /**
@@ -50,7 +53,7 @@ class UrlManager extends BaseObject {
         foreach ($matches as $index => $value) {
             $params[$keys[$index]] = $value;
         }
-        $this->params = $params;
+        $this->_params = $params;
         return true;
     }
 }

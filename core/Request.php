@@ -1,5 +1,6 @@
 <?php
 namespace Core;
+use Framework;
 /**
  * Request
  * 
@@ -11,10 +12,15 @@ class Request extends BaseObject {
     private $_get;
     private $_post;
     private $_files;
+    private $_request_method;
+    private $_script_name;
     public function init() {
         $this->_get   = $_GET;
         $this->_post  = $_POST;
         $this->_files = $_FILES;
+        $this->_request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+        $this->_script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME');
+        Framework::setAlias('@web', str_replace('/index.php', '', $this->_script_name));
     }
     public function merge($values) {
         $this->_get = array_merge($values, $this->_get);

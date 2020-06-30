@@ -14,10 +14,10 @@
                 <a href="#" class="btn btn-brown">Appointment Now</a>
             </div> <!-- end col -->
             <div class="col-2">
-                <img src="<?= $this->assetsPath; ?>img/site/01.jpg" alt="">
+                <img src="<?= Framework::getAlias('@web/assets/img/site/01.jpg') ?>" alt="">
             </div> <!-- end col -->
             <div class="col-2">
-                <img src="<?= $this->assetsPath; ?>img/site/02.jpg" alt="">
+                <img src="<?= Framework::getAlias('@web/assets/img/site/02.jpg') ?>" alt="">
             </div> <!-- end col -->
             <div class="col-3 working-hours">
                 <div class="section-title">
@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-3">
                 <div class="card">
-                    <img class="rounded-circle p-2" src="<?= $this->assetsPath; ?>img/site/service_01.jpg" alt="">
+                    <img class="rounded-circle p-2" src="<?= Framework::getAlias('@web/assets/img/site/service_01.jpg') ?>" alt="">
                     <div class="card-content center">
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected materials.</p>
 
@@ -79,7 +79,7 @@
             </div> <!-- end col-3 -->
             <div class="col-3">
                 <div class="card">
-                    <img class="rounded-circle p-2" src="<?= $this->assetsPath; ?>img/site/service_02.jpg" alt="">
+                    <img class="rounded-circle p-2" src="<?= Framework::getAlias('@web/assets/img/site/service_02.jpg') ?>" alt="">
                     <div class="card-content center">
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected materials.</p>
 
@@ -89,7 +89,7 @@
             </div> <!-- end col-3 -->
             <div class="col-3">
                 <div class="card">
-                    <img class="rounded-circle p-2" src="<?= $this->assetsPath; ?>img/site/service_03.jpg" alt="">
+                    <img class="rounded-circle p-2" src="<?= Framework::getAlias('@web/assets/img/site/service_03.jpg') ?>" alt="">
                     <div class="card-content center">
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected materials.</p>
 
@@ -99,7 +99,7 @@
             </div> <!-- end col-3 -->
             <div class="col-3">
                 <div class="card">
-                    <img class="rounded-circle p-2" src="<?= $this->assetsPath; ?>img/site/service_04.jpg" alt="">
+                    <img class="rounded-circle p-2" src="<?= Framework::getAlias('@web/assets/img/site/service_04.jpg') ?>" alt="">
                     <div class="card-content center">
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected materials.</p>
 
@@ -120,37 +120,37 @@
         <div class="row">
             <div class="col-2 py-2">
                 <div class="card-img magnifier-parent">
-                    <img src="<?= $this->assetsPath; ?>img/site/gallery_01.jpg" alt="">
+                    <img src="<?= Framework::getAlias('@web/assets/img/customer/gallery_01.jpg') ?>" alt="">
                     <button class="magnifier btn rounded-circle"><i class="fas fa-search-plus"></i></button>
                 </div> <!-- end card-img -->
             </div> <!-- end col -->
             <div class="col-2 py-2">
                 <div class="card-img magnifier-parent">
-                    <img src="<?= $this->assetsPath; ?>img/site/gallery_02.jpg" alt="">
+                    <img src="<?= Framework::getAlias('@web/assets/img/customer/gallery_02.jpg') ?>" alt="">
                     <button class="magnifier btn rounded-circle"><i class="fas fa-search-plus"></i></button>
                 </div> <!-- end card-img -->
             </div> <!-- end col -->
             <div class="col-2 py-2">
                 <div class="card-img magnifier-parent">
-                    <img src="<?= $this->assetsPath; ?>img/site/gallery_03.jpg" alt="">
+                    <img src="<?= Framework::getAlias('@web/assets/img/customer/gallery_03.jpg') ?>" alt="">
                     <button class="magnifier btn rounded-circle"><i class="fas fa-search-plus"></i></button>
                 </div> <!-- end card-img -->
             </div> <!-- end col -->
             <div class="col-2 py-2">
                 <div class="card-img magnifier-parent">
-                    <img src="<?= $this->assetsPath; ?>img/site/gallery_04.jpg" alt="">
+                    <img src="<?= Framework::getAlias('@web/assets/img/customer/gallery_04.jpg') ?>" alt="">
                     <button class="magnifier btn rounded-circle"><i class="fas fa-search-plus"></i></button>
                 </div> <!-- end card-img -->
             </div> <!-- end col -->
             <div class="col-2 py-2">
                 <div class="card-img magnifier-parent">
-                    <img src="<?= $this->assetsPath; ?>img/site/gallery_05.jpg" alt="">
+                    <img src="<?= Framework::getAlias('@web/assets/img/customer/gallery_05.jpg') ?>" alt="">
                     <button class="magnifier btn rounded-circle"><i class="fas fa-search-plus"></i></button>
                 </div> <!-- end card-img -->
             </div> <!-- end col -->
             <div class="col-2 py-2">
                 <div class="card-img magnifier-parent">
-                    <img src="<?= $this->assetsPath; ?>img/site/gallery_06.jpg" alt="">
+                    <img src="<?= Framework::getAlias('@web/assets/img/customer/gallery_06.jpg') ?>" alt="">
                     <button class="magnifier btn rounded-circle"><i class="fas fa-search-plus"></i></button>
                 </div> <!-- end card-img -->
             </div> <!-- end col -->
@@ -159,4 +159,4 @@
             <a href="#" class="btn btn-brown">voir plus</a>
         </div> <!-- end section-footer -->
     </div> <!-- end container -->
-</section> <!-- end section -->
+</section>

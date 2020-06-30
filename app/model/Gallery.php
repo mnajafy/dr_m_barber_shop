@@ -9,6 +9,8 @@ use Core\Model;
  * @property string $title
  * @property string $content
  * @property int $category_id
+ * 
+ * @property Category $category
  */
 class Gallery extends Model {
     public static function tablename() {
@@ -17,17 +19,18 @@ class Gallery extends Model {
     public static function byCategory($value = null) {
         if ($value) {
             return static::runAll('
-                SELECT imgs.id, imgs.img, imgs.content, category.id as categoryurl, category.title as categoryTitle 
-                FROM imgs 
-                LEFT JOIN category ON category_id = category.id AND category.title = ? 
-                ORDER BY imgs.id DESC
+                SELECT m1.*
+                FROM imgs AS m1
+                INNER JOIN category m2 ON m1.category_id = m2.id AND m2.title = ?
+                ORDER BY m1.id DESC
             ', [$value]);
         }
-        return static::runAll('
-            SELECT imgs.id, imgs.img, imgs.content, category.id as categoryId, category.title as categoryTitle
-            FROM imgs
-            LEFT JOIN category ON category_id = category.id
-            ORDER BY imgs.id DESC
-        ');
+        return static::runAll('SELECT m1.* FROM imgs AS m1 ORDER BY m1.id DESC');
+    }
+    public function getCategory() {
+        if ($this->_category === null) {
+            $this->_category = Category::one($this->category_id);
+        }
+        return $this->_category;
     }
 }

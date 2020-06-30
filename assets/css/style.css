@@ -97,6 +97,7 @@ hr { height: 0; box-sizing: content-box; border: 0; border-top: 1px solid #eee; 
 .dropdown-bars span:after { top: 7px; right: 0; }
 /* container */
 .container { display: block; width: 100%; padding-right: 0.938rem; padding-left: 0.938rem; margin-right: auto; margin-left: auto; }
+.clearfix:after {display: table;content: ' ';clear: both;}
 @media (min-width: 576px) { .container { max-width: 550px;} }
 @media (min-width: 768px) { .container { max-width: 740px;} }
 @media (min-width: 992px) { .container { max-width: 960px;} }
