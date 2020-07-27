@@ -5,8 +5,8 @@ return [
     'db'         => $db,
     'layout'     => 'page',
     'basePath'   => dirname(dirname(__DIR__)),
-    'viewPath'   => dirname(dirname(__DIR__)) . '\App\views',
-    'layoutPath' => dirname(dirname(__DIR__)) . '\App\layout',
+    'viewPath'   => dirname(dirname(__DIR__)) . '/app/views',
+    'layoutPath' => dirname(dirname(__DIR__)) . '/app/layout',
     'urlManager' => [
         'class' => '\Core\UrlManager',
         'rules' => $rules

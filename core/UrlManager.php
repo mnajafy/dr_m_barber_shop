@@ -13,11 +13,10 @@ class UrlManager extends BaseObject {
     /**
      * @param Request $request
      */
-    public function resolve($request) {
+    public function parseRequest($request) {
         $route = null;
-        $url   = ($request->get('r') === null ? '/' : trim($request->get('r'), '/'));
         foreach ($this->rules as $key => $value) {
-            if ($this->match($url, $key)) {
+            if ($this->match($request->pathInfo, $key)) {
                 $route = $value;
                 break;
             }
@@ -25,19 +24,18 @@ class UrlManager extends BaseObject {
         if ($route === null) {
             throw new Exception('request page not found!');
         }
-        $params = $request->merge($this->_params);
-        return [$route, $params];
+        return [$route, $this->_params];
     }
     /**
-     * @param string $url
+     * @param string $path
      * @param string $key
      * @return bool
      */
-    public function match($url, $key) {
+    public function match($path, $key) {
         $name    = preg_replace('#{([\w]+)}#', '([^/]+)', $key);
         $regex   = "#^$name$#i";
         $matches = [];
-        if (!preg_match($regex, $url, $matches)) {
+        if (!preg_match($regex, $path, $matches)) {
             return false;
         }
 

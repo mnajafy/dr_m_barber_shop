@@ -1,27 +1,24 @@
 <?php
 /* @var $this \Core\View */
 /* @var $model \App\Model\Gallery */
-$this->title = 'Single';
+$this->title                  = $model->title;
 $this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['home/index']];
 $this->params['breadcrumb'][] = ['label' => 'Gallery', 'url' => ['gallery/index']];
-$this->params['breadcrumb'][] = 'Single';
+$this->params['breadcrumb'][] = $this->title;
 ?>
 <section class="section">
     <div class="container">
-        <?php if ($model): ?>
-            <div class="section-title">
-                <h3><?= $model->title ?></h3>
-                <hr>
+        <div class="section-title">
+            <h3><?= $model->title ?></h3>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-6 p-5">
+                <img src="<?= Framework::getAlias('@web/assets/img/customer/' . $model->img) ?>" alt=""/>
             </div>
-            <div class="row">
-                <div class="col-6 p-5"><img src="<?= $model->img ?>" alt=""></div>
-                <div class="col-6 p-5"><p><?= $model->content ?></p></div>
+            <div class="col-6 p-5">
+                <?= $model->content ?>
             </div>
-        <?php else: ?>
-            <div class="section-title">
-                <h3>Article introuvable</h3>
-                <hr>
-            </div>
-        <?php endif ?>
+        </div>
     </div>
 </section>

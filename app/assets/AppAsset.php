@@ -6,6 +6,7 @@ use Core\AssetBundle;
  */
 class AppAsset extends AssetBundle {
     public $css = [
+        'assets/css/main.css',
         'assets/css/style.css',
         'assets/libs/fontawesome/css/fontawesome-all.min.css',
     ];

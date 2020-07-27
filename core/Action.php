@@ -7,8 +7,8 @@ use Exception;
  */
 class Action extends BaseObject {
     public $id;
-    public $actionMethod;
     public $controller;
+    public $actionMethod;
     public function run($params) {
         $method = new ReflectionMethod($this->controller, $this->actionMethod);
         $args   = [];

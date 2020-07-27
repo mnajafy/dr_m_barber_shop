@@ -1,9 +1,10 @@
 <?php
 return [
-    '/'                   => 'home/index',
+    '/'                  => 'home/index',
     //
-    'gallery'             => 'gallery/index',
-    'gallery/{id}'        => 'gallery/single',
+    'gallery'            => 'gallery/index',
+    'gallery/index'      => 'gallery/index',
+    'gallery/{id}'       => 'gallery/single',
     //
-    'hairdresser'         => 'hairdresser/index',
+    'hairdresser'        => 'hairdresser/index',
 ];

@@ -2,9 +2,11 @@
 namespace App\Controllers;
 use Core\Controller;
 class ErrorController extends Controller {
-    public function actionIndex($title = null, $message = null) {
+    public function actionIndex($title = null, $file = null, $line = null, $message = null) {
         return $this->render([
             'title'   => $title,
+            'file'    => $file,
+            'line'    => $line,
             'message' => $message,
         ]);
     }
