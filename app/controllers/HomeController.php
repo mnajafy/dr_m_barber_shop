@@ -5,6 +5,6 @@ class HomeController extends Controller {
     public $layout = 'main';
     public function actionIndex() {
 
-        return $this->render();
+        return $this->render([]);
     }
 }

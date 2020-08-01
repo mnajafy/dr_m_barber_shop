@@ -15,7 +15,7 @@ class Url extends BaseObject {
                 break;
             }
         }
-        if ($key == null) {
+        if ($key === null) {
             throw new Exception('url to exception');
         }
 

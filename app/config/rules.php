@@ -1,10 +1,14 @@
 <?php
 return [
-    '/'                  => 'home/index',
+    ''                   => 'home/index',
+    '/'                   => 'home/index',
     //
-    'gallery'            => 'gallery/index',
-    'gallery/index'      => 'gallery/index',
-    'gallery/{id}'       => 'gallery/single',
+    'admin'               => 'admin/gallery-index',
+    'admin/gallery-index' => 'admin/gallery-index',
     //
-    'hairdresser'        => 'hairdresser/index',
+    'gallery'             => 'gallery/index',
+    'gallery/index'       => 'gallery/index',
+    'gallery/{id}'        => 'gallery/single',
+    //
+    'hairdresser'         => 'hairdresser/index',
 ];
