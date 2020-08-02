@@ -10,6 +10,12 @@ $this->params['breadcrumb'][] = $this->title;
 ?>
 <div class="container">
     <?php $form  = ActiveForm::begin(['options' => ['style' => 'padding: 15px;']]) ?>
+    <div class="form-group">
+        <label for="demo">Demo</label>
+        <input type="text" class="form-control" name="demo" id="demo">
+        <small class="form-text">We'll never share your email with anyone else.</small>
+    </div>
+    <button class="btn btn-brown">Demo</button>
     <div class="row" style="margin-bottom: 15px;">
         <div class="col-4">
             <?= $form->field($model, 'username') ?>
