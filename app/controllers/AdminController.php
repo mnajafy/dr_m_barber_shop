@@ -1,12 +1,11 @@
 <?php
 namespace App\Controllers;
 use Core\Controller;
+use App\Model\Test;
 class AdminController extends Controller {
-//    public $layout = 'admin';
+    //public $layout = 'admin';
     public function actionGalleryIndex() {
-        
-        return $this->render([
-            
-        ]);
+        $model = new Test();
+        return $this->render($model);
     }
 }
