@@ -16,19 +16,19 @@ $this->params['breadcrumb'][] = $this->title;
         <small class="form-text">We'll never share your email with anyone else.</small>
     </div>
     <button class="btn btn-brown">Demo</button>
-    <div class="row" style="margin-bottom: 15px;">
+    <div class="row">
         <div class="col-4">
             <?= $form->field($model, 'username') ?>
         </div>
     </div>
-    <div class="row" style="margin-bottom: 15px;">
+    <div class="row">
         <div class="col-4">
             <?= $form->field($model, 'password') ?>
         </div>
     </div>
     <div class="row">
         <div class="col-4">
-            <?= Html::input('submit', null, 'Login') ?>
+            <?= Html::submitButton('Login', ['class' => 'btn btn-brown']) ?>
         </div>
     </div>
     <?php ActiveForm::end() ?>

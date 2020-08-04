@@ -85,4 +85,7 @@ class Html {
         $options['value'] = $value === null ? null : (string) $value;
         return static::tag('input', '', $options);
     }
+    public static function submitButton($content = null, $options = []) {
+        return static::tag('button', $content, $options);
+    }
 }

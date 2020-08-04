@@ -7,13 +7,12 @@ class ActiveField extends BaseObject {
     public $options      = ['class' => 'form-group'];
     public $template     = "{label}\n{input}";
     public $labelOptions = [];
-    public $inputOptions = [];
+    public $inputOptions = ['class' => 'form-control'];
     public $parts        = [];
     public function __toString() {
         return $this->render();
     }
     public function render() {
-
         if (!isset($this->parts['{input}'])) {
             $this->textInput();
         }
@@ -21,7 +20,6 @@ class ActiveField extends BaseObject {
             $this->label();
         }
         $content = strtr($this->template, $this->parts);
-
         return $this->begin() . "\n" . $content . "\n" . $this->end();
     }
     public function begin() {
