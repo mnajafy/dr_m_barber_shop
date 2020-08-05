@@ -33,16 +33,16 @@ class ActiveField extends BaseObject {
             $this->parts['{label}'] = '';
             return $this;
         }
-        $options = array_merge($this->labelOptions, $options);
+        $config = array_merge($this->labelOptions, $options);
         if ($label !== null) {
-            $options['label'] = $label;
+            $config['label'] = $label;
         }
-        $this->parts['{label}'] = Html::activeLabel($this->model, $this->attribute, $options);
+        $this->parts['{label}'] = Html::activeLabel($this->model, $this->attribute, $config);
         return $this;
     }
     public function textInput($options = []) {
-        $options = array_merge($this->inputOptions, $options);
-        $this->parts['{input}'] = Html::activeTextInput($this->model, $this->attribute, $options);
+        $config = array_merge($this->inputOptions, $options);
+        $this->parts['{input}'] = Html::activeTextInput($this->model, $this->attribute, $config);
         return $this;
     }
 }

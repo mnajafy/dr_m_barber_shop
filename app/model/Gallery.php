@@ -1,6 +1,6 @@
 <?php
 namespace App\Model;
-use Core\Model;
+use Core\ActiveRecord;
 /**
  * Gallery
  * 
@@ -12,7 +12,7 @@ use Core\Model;
  * 
  * @property Category $category
  */
-class Gallery extends Model {
+class Gallery extends ActiveRecord {
     public static function tablename() {
         return 'imgs';
     }
