@@ -14,18 +14,9 @@ class Test extends ActiveRecord {
     }
     public function rules() {
         return [
-//            [['username', 'password'], 'asd'],
-//            [['username', 'password'], ['class' => '\app\In']],
-//            [['username', 'password'], function ($model, $attribute, $value) {
-////                $model->addError('password', 'asd');
-//            }],
             [['username', 'password'], 'required'],
-            [['username'], 'string', 'max' => 255],
-            [['password'], 'number'],
+            [['username', 'password'], 'string', 'max' => 255],
         ];
-    }
-    public function asd() {
-//        $this->addError('username', 'asd');
     }
     public function labels() {
         return [
