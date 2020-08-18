@@ -1,5 +1,5 @@
 <?php
-/* @var $this \Core\View */
+/* @var $this core\web\View */
 $this->title = 'Hairdresser';
 $this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['home/index']];
 $this->params['breadcrumb'][] = 'Hairdresser';

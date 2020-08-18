@@ -1,5 +1,5 @@
 <?php
-/* @var $this \Core\View */
+/* @var $this core\web\View */
 /* @var $title string */
 /* @var $file string */
 /* @var $line int */

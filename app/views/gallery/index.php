@@ -1,6 +1,6 @@
 <?php
-use Core\Url;
-/* @var $this \Core\View */
+use core\helpers\Url;
+/* @var $this core\web\View */
 $this->title                  = 'Gallery';
 $this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['home/index']];
 $this->params['breadcrumb'][] = $this->title;

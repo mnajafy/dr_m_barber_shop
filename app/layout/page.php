@@ -1,7 +1,7 @@
 <?php
-use App\Assets\AppAsset;
-use Core\Url;
-/* @var $this \Core\View */
+use app\assets\AppAsset;
+use core\helpers\Url;
+/* @var $this core\web\View */
 /* @var $content string */
 
 AppAsset::register($this);

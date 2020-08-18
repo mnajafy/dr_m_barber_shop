@@ -4,7 +4,7 @@
  */
 class Framework {
     /**
-     * @var \Core\App
+     * @var \core\web\Application
      */
     public static $app;
     private static $_aliases = [];

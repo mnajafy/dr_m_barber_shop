@@ -1,5 +1,5 @@
 <?php
-/* @var $this \Core\View */
+/* @var $this core\web\View */
 ?>
 <section class="section welcome">
     <div class="container">

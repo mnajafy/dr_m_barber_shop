@@ -8,7 +8,7 @@ return [
     'viewPath'   => dirname(dirname(__DIR__)) . '/app/views',
     'layoutPath' => dirname(dirname(__DIR__)) . '/app/layout',
     'urlManager' => [
-        'class' => '\Core\UrlManager',
+        'class' => '\core\web\UrlManager',
         'rules' => $rules
     ],
 ];

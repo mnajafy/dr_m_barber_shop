@@ -1,6 +1,6 @@
 <?php
-namespace App\Controllers;
-use Core\Controller;
+namespace app\controllers;
+use core\web\Controller;
 class HomeController extends Controller {
     public $layout = 'main';
     public function actionIndex() {

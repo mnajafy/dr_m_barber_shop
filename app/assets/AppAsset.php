@@ -1,6 +1,6 @@
 <?php
-namespace App\Assets;
-use Core\AssetBundle;
+namespace app\assets;
+use core\web\AssetBundle;
 /**
  * AppAsset
  */

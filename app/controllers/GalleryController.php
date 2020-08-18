@@ -1,9 +1,9 @@
 <?php
-namespace App\Controllers;
-use Core\Controller;
-use App\Model\Gallery;
-use App\Model\Category;
+namespace app\controllers;
 use Exception;
+use core\web\Controller;
+use app\models\Gallery;
+use app\models\Category;
 class GalleryController extends Controller {
     public function actionIndex($category = null) {
         $dataGallery  = Gallery::byCategory($category);

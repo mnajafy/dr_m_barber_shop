@@ -1,6 +1,6 @@
 <?php
-/* @var $this \Core\View */
-/* @var $model \App\Model\Gallery */
+/* @var $this core\web\View */
+/* @var $model \app\models\Gallery */
 $this->title                  = $model->title;
 $this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['home/index']];
 $this->params['breadcrumb'][] = ['label' => 'Gallery', 'url' => ['gallery/index']];
