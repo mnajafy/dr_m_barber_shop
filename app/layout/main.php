@@ -17,31 +17,37 @@ AppAsset::register($this);
     <body>
         <header>
             <nav>
-                <a class="nav-brand" href="<?= Url::to(['home/index']) ?>"><img src="<?= Framework::getAlias('@web/assets/img/site/logoBrand.jpg')?>" alt=""></a>
+                <a class="nav-brand" href="<?= Url::to(['/home/index']) ?>"><img src="<?= Framework::getAlias('@web/assets/img/site/logoBrand.jpg')?>" alt=""></a>
                 <button class="dropdown-bars">Menu <span></span></button>
 
                 <div class="navbar-collapse">
                     <ul>
                         <li>
-                            <a class="nav-link" href="<?= Url::to(['hairdresser/index', '#' => 'contactez-nous']) ?>">
+                            <a class="nav-link" href="<?= Url::to(['/admin/gallery-index']) ?>">
+                                <i class="fas fa-user"></i>
+                                admin gallery
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="<?= Url::to(['/hairdresser/index', '#' => 'contactez-nous']) ?>">
                                 <i class="fas fa-mobile-alt"></i>
                                 contactez-nous
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="<?= Url::to(['hairdresser/index', '#' => 'nos-horaire']) ?>">
+                            <a class="nav-link" href="<?= Url::to(['/hairdresser/index', '#' => 'nos-horaire']) ?>">
                                 <i class="fas fa-clock"></i> 
                                 Infos horaires
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="<?= Url::to(['hairdresser/index']) ?>">
+                            <a class="nav-link" href="<?= Url::to(['/hairdresser/index']) ?>">
                                 <i class="fas fa-store-alt"></i>
                                 salon de coiffure
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="<?= Url::to(['gallery/index']) ?>">
+                            <a class="nav-link" href="<?= Url::to(['/gallery/index']) ?>">
                                 <i class="fas fa-images"></i>
                                 lyon en photos
                             </a>

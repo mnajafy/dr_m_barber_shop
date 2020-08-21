@@ -22,6 +22,12 @@ AppAsset::register($this);
                 <div class="navbar-collapse">
                     <ul>
                         <li>
+                            <a class="nav-link" href="<?= Url::to(['/admin/gallery-index']) ?>">
+                                <i class="fas fa-user"></i>
+                                admin gallery
+                            </a>
+                        </li>
+                        <li>
                             <a class="nav-link" href="<?= Url::to(['/hairdresser/index', '#' => 'contactez-nous']) ?>">
                                 <i class="fas fa-mobile-alt"></i>
                                 contactez-nous
