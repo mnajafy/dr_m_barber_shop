@@ -7,8 +7,8 @@ use Exception;
 class AdminController extends Controller {
     //public $layout = 'admin';
     public function actionGalleryIndex() {
-        $model = new Test();
-        return $this->render($model);
+        $models = Test::find()->all();
+        return $this->render(['models' => $models]);
     }
     public function actionGalleryView($id) {
         $model = $this->findGalley($id);
