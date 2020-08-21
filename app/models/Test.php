@@ -18,10 +18,10 @@ class Test extends ActiveRecord {
             [['username', 'password'], 'string', 'max' => 255],
         ];
     }
-    public function labels() {
-        return [
-            'username' => 'نام کاربری',
-            'password' => 'رمز عبور',
-        ];
-    }
+//    public function labels() {
+//        return [
+//            'username' => 'نام کاربری',
+//            'password' => 'رمز عبور',
+//        ];
+//    }
 }
