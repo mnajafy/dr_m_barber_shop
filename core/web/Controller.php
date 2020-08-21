@@ -3,6 +3,7 @@ namespace core\web;
 use Exception;
 use Framework;
 use ReflectionMethod;
+use core\helpers\Url;
 use core\base\BaseObject;
 class Controller extends BaseObject {
     /**
@@ -138,7 +139,7 @@ class Controller extends BaseObject {
     public function getRoute() {
         return $this->action !== null ? $this->action->getUniqueId() : $this->getUniqueId();
     }
-    public function redirect() {
-        
+    public function redirect($url, $statusCode = 302) {
+        return Framework::$app->getResponse()->redirect(Url::to($url), $statusCode);
     }
 }
