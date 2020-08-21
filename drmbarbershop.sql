@@ -1,100 +1,94 @@
--- phpMyAdmin SQL Dump
--- version 4.8.5
--- https://www.phpmyadmin.net/
---
--- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 24 juin 2020 à 16:30
--- Version du serveur :  5.7.26
--- Version de PHP :  7.2.18
+/*
+ Navicat Premium Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+ Source Server         : mysql
+ Source Server Type    : MySQL
+ Source Server Version : 50711
+ Source Host           : localhost:3306
+ Source Schema         : drmbarbershop
 
+ Target Server Type    : MySQL
+ Target Server Version : 50711
+ File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+ Date: 21/08/2020 17:49:26
+*/
 
---
--- Base de données :  `drmbarbershop`
---
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `admin`
---
-
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
 DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `Last_Name` varchar(255) NOT NULL,
-  `First_Name` varchar(255) NOT NULL,
-  `E_Mail` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
+CREATE TABLE `admin`  (
+  `Last_Name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `First_Name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `E_Mail` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Auth` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
---
--- Déchargement des données de la table `admin`
---
-
-INSERT INTO `admin` (`Last_Name`, `First_Name`, `E_Mail`, `Password`, `Auth`) VALUES
-('mohammad', 'najafy', 'm.najafy@hotmail.com', 'azerty', 1234);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `category`
---
-
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE IF NOT EXISTS `category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `category`
---
-
-INSERT INTO `category` (`id`, `title`) VALUES
-(1, 'alpha'),
-(2, 'delta'),
-(3, 'romeo');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `imgs`
---
-
-DROP TABLE IF EXISTS `imgs`;
-CREATE TABLE IF NOT EXISTS `imgs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `img` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `imgs`
---
-
-INSERT INTO `imgs` (`id`, `img`, `title`, `content`, `category_id`) VALUES
-(1, 'gallery_1.jpg', 'titre N°1', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 2),
-(2, 'gallery_2.jpg', 'titre N°2', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 1),
-(3, 'gallery_3.jpg', 'titre N°3', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 1),
-(4, 'gallery_4.jpg', 'titre N°4', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 3),
-(5, 'gallery_5.jpg', 'titre N°5', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 2),
-(6, 'gallery_6.jpg', 'titre N°6', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 3);
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+BEGIN;
+INSERT INTO `admin` VALUES ('mohammad', 'najafy', 'm.najafy@hotmail.com', 'azerty', 1234);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+BEGIN;
+INSERT INTO `category` VALUES (1, 'alpha'), (2, 'delta'), (3, 'romeo');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for imgs
+-- ----------------------------
+DROP TABLE IF EXISTS `imgs`;
+CREATE TABLE `imgs`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
+
+-- ----------------------------
+-- Records of imgs
+-- ----------------------------
+BEGIN;
+INSERT INTO `imgs` VALUES (1, 'gallery_1.jpg', 'titre N°1', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 2), (2, 'gallery_2.jpg', 'titre N°2', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 1), (3, 'gallery_3.jpg', 'titre N°3', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 1), (4, 'gallery_4.jpg', 'titre N°4', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 3), (5, 'gallery_5.jpg', 'titre N°5', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 2), (6, 'gallery_6.jpg', 'titre N°6', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, fugit?', 3);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_persian_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_persian_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_persian_ci;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+BEGIN;
+INSERT INTO `users` VALUES (30, 'a', 'b'), (31, 'aa', 'bb');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;
