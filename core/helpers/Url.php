@@ -1,39 +1,39 @@
 <?php
 namespace core\helpers;
-use Framework;
 use Exception;
+use Framework;
+use core\web\Application;
 class Url {
-    public static function to($params = []) {
-        if (!isset($params[0])) {
-            throw new Exception('url to exception');
+    public static function normalizeRoute($route) {
+        $route = Framework::getAlias((string) $route);
+        if (strncmp($route, '/', 1) === 0) {
+            return ltrim($route, '/');
         }
-        $key   = null;
-        $rules = Framework::$app->urlManager->rules;
-        foreach ($rules as $index => $value) {
-            if ($value == $params[0]) {
-                $key = $index;
-                break;
-            }
+        // relative route
+        if (Framework::$app->controller === null) {
+            throw new Exception("Unable to resolve the relative route: $route. No active controller is available.");
         }
-        if ($key === null) {
-            throw new Exception('url to exception');
+        if (strpos($route, '/') === false) {
+            // empty or an action ID
+            return $route === '' ? Framework::$app->controller->getRoute() : Framework::$app->controller->getUniqueId() . '/' . $route;
         }
-
-        unset($params[0]);
-
-        foreach ($params as $name => $value) {
-            if (strpos($key, '{' . $name . '}') !== false) {
-                $key = str_replace('{' . $name . '}', $value, $key);
-                unset($params[$name]);
-            }
+        if (Framework::$app->controller->module instanceof Application) {
+            return ltrim($route, '/');
         }
-        
-        $hash = null;
-        if (isset($params['#'])) {
-            $hash = $params['#'];
-            unset($params['#']);
+        return ltrim(Framework::$app->controller->module->getUniqueId() . '/' . $route, '/');
+    }
+    public static function toRoute($route = []) {
+        $route[0] = static::normalizeRoute($route[0]);
+        return Framework::$app->getUrlManager()->createUrl($route);
+    }
+    public static function to($url = []) {
+        if (is_array($url)) {
+            return static::toRoute($url);
         }
-        $query = http_build_query($params);
-        return Framework::getAlias("@web/$key" . ($query ? '?' . $query : '') . ($hash ? "#$hash" : ''));
+        $url = Framework::getAlias($url);
+        if (!$url) {
+            $url = Framework::$app->getRequest()->getUrl();
+        }
+        return $url;
     }
 }

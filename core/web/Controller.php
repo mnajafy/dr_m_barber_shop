@@ -1,7 +1,7 @@
 <?php
 namespace core\web;
-use Framework;
 use Exception;
+use Framework;
 use ReflectionMethod;
 use core\base\BaseObject;
 class Controller extends BaseObject {
@@ -10,6 +10,10 @@ class Controller extends BaseObject {
      */
     public $id;
     /**
+     * @var Module
+     */
+    public $module;
+    /**
      * @var Action
      */
     public $action;
@@ -17,6 +21,10 @@ class Controller extends BaseObject {
      * @var string
      */
     public $layout;
+    /**
+     * @var string
+     */
+    public $defaultAction = 'index';
     /**
      * 
      */
@@ -28,7 +36,10 @@ class Controller extends BaseObject {
      * @param string $actionID
      * @return Action
      */
-    public function createAction(string $actionID) {
+    public function createAction($actionID) {
+        if ($actionID === '') {
+            $actionID = $this->defaultAction;
+        }
 
         $methodName = 'action' . str_replace(' ', '', ucwords(str_replace('-', ' ', $actionID)));
         if (!method_exists($this, $methodName)) {
@@ -51,7 +62,7 @@ class Controller extends BaseObject {
      * @param array|object $params
      * @return string
      */
-    public function render($params) {
+    public function render($params = null) {
         $config = [];
         if (is_array($params)) {
             $config = $params;
@@ -78,39 +89,55 @@ class Controller extends BaseObject {
      * @return string
      */
     public function getViewFile() {
-        $viewFile = realpath(Framework::$app->viewPath . DIRECTORY_SEPARATOR . $this->id . DIRECTORY_SEPARATOR . $this->action->id . '.php');
-
+        $file     = $this->module->getViewPath() . DIRECTORY_SEPARATOR . $this->id . DIRECTORY_SEPARATOR . $this->action->id . '.php';
+        $viewFile = realpath($file);
         if (!is_file($viewFile)) {
-            throw new Exception("View File { <b>{$this->action->id}</b> } Not Found");
+            throw new Exception("View File { <b>{$file}</b> } Not Found");
         }
-
         return $viewFile;
     }
     /**
      * @return false|string
      */
     public function getLayoutFile() {
-
         $layout = false;
-        if (is_string($this->layout)) {
+        $module = $this->module;
+        if (!is_null($this->layout)) {
             $layout = $this->layout;
         }
-        else if (is_null($this->layout) && !is_null(Framework::$app->layout)) {
-            $layout = Framework::$app->layout;
+        else if (is_null($this->layout) && !is_null($this->module)) {
+            while ($module !== null && $module->layout === null) {
+                $module = $module->module;
+            }
+            if ($module !== null && is_string($module->layout)) {
+                $layout = $module->layout;
+            }
         }
-
         if ($layout === false) {
             return false;
         }
-
-        $layoutFile = realpath(Framework::$app->layoutPath . DIRECTORY_SEPARATOR . $layout . '.php');
-        if (!is_file($layoutFile)) {
-            throw new Exception("Layout File { <b>$layout</b> } Not Found");
+        if (strncmp($layout, '@', 1) === 0) {
+            $file = Framework::getAlias($layout);
         }
-
+        elseif (strncmp($layout, '/', 1) === 0) {
+            $file = Framework::$app->getLayoutPath() . DIRECTORY_SEPARATOR . substr($layout, 1);
+        }
+        else {
+            $file = $module->getLayoutPath() . DIRECTORY_SEPARATOR . $layout;
+        }
+        $layoutFile = realpath($file . '.php');
+        if (!is_file($layoutFile)) {
+            throw new Exception("Layout File { <b>$file.php</b> } Not Found");
+        }
         return $layoutFile;
     }
     //
+    public function getUniqueId() {
+        return $this->module instanceof Application ? $this->id : $this->module->getUniqueId() . '/' . $this->id;
+    }
+    public function getRoute() {
+        return $this->action !== null ? $this->action->getUniqueId() : $this->getUniqueId();
+    }
     public function redirect() {
         
     }

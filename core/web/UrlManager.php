@@ -1,6 +1,6 @@
 <?php
 namespace core\web;
-use Exception;
+use Framework;
 use core\base\BaseObject;
 /**
  * UrlManager
@@ -10,49 +10,85 @@ class UrlManager extends BaseObject {
     /**
      * @var array
      */
-    private $_params;
+    private $_rules  = [];
     /**
-     * @param Request $request
+     * @return array
      */
-    public function parseRequest($request) {
-        $route = null;
-        foreach ($this->rules as $key => $value) {
-            if ($this->match($request->pathInfo, $key)) {
-                $route = $value;
+    public function getRules() {
+        return $this->_rules;
+    }
+    /**
+     * @param array $rules
+     */
+    public function setRules($rules) {
+        $this->_rules = $rules;
+    }
+    /**
+     * 
+     */
+    public function init() {
+        if (empty($this->_rules)) {
+            return;
+        }
+        $this->_rules = $this->buildRules($this->_rules);
+    }
+    /**
+     * 
+     */
+    public function buildRules($ruleDeclarations) {
+        $builtRules = [];
+        foreach ($ruleDeclarations as $pattern => $route) {
+            $config       = ['class' => UrlRule::class, 'pattern' => $pattern, 'route' => $route];
+            $builtRules[] = BaseObject::createObject($config);
+        }
+        return $builtRules;
+    }
+    /**
+     * @param array $params
+     * @return string
+     */
+    public function createUrl($params = []) {
+
+        $anchor = isset($params['#']) ? '#' . $params['#'] : '';
+        unset($params['#']);
+
+        $route = trim($params[0], '/');
+        unset($params[0]);
+
+        $url = false;
+        foreach ($this->rules as $index => $rule) {
+            /* @var $rule UrlRule */
+            $url = $rule->createUrl($route, $params);
+            if ($url !== false) {
                 break;
             }
         }
-        if ($route === null) {
-            throw new Exception('request page not found!');
+
+        $baseUrl = Framework::$app->getRequest()->getBaseUrl();
+        if ($url !== false) {
+            $url = ltrim($url, '/');
+            return "$baseUrl/{$url}{$anchor}";
         }
-        return [$route, $this->_params];
+
+        if (!empty($params) && ($query = http_build_query($params)) !== '') {
+            $route .= '?' . $query;
+        }
+
+        $route2 = ltrim($route, '/');
+        return "$baseUrl/{$route2}{$anchor}";
     }
     /**
-     * @param string $path
-     * @param string $key
-     * @return bool
+     * @param Request $request
+     * @return array
      */
-    public function match($path, $key) {
-        $name    = preg_replace('#{([\w]+)}#', '([^/]+)', $key);
-        $regex   = "#^$name$#i";
-        $matches = [];
-        if (!preg_match($regex, $path, $matches)) {
-            return false;
+    public function parseRequest($request) {
+        foreach ($this->rules as $index => $rule) {
+            $result = $rule->parseRequest($this, $request);
+            if ($result !== false) {
+                return $result;
+            }
         }
-
-        $keys  = [];
-        $items = [];
-        preg_match_all('#{([\w]+)}#', $key, $items);
-        if ($items[1]) {
-            $keys = $items[1];
-        }
-
-        $params = [];
-        array_shift($matches);
-        foreach ($matches as $index => $value) {
-            $params[$keys[$index]] = $value;
-        }
-        $this->_params = $params;
-        return true;
+        $pathInfo = $request->getPathInfo();
+        return [$pathInfo, []];
     }
 }

@@ -27,4 +27,7 @@ class Action extends BaseObject {
         }
         return call_user_func_array([$this->controller, $this->actionMethod], $args);
     }
+    public function getUniqueId() {
+        return $this->controller->getUniqueId() . '/' . $this->id;
+    }
 }

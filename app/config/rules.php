@@ -1,17 +1,9 @@
 <?php
 return [
-    ''                     => 'home/index',
-    '/'                    => 'home/index',
-    //
-    'admin'                => 'admin/gallery-index',
-    'admin/gallery-index'  => 'admin/gallery-index',
-    'admin/gallery-create' => 'admin/gallery-create',
-    'admin/gallery-update' => 'admin/gallery-update',
-    'admin/gallery-delete' => 'admin/gallery-delete',
-    //
-    'gallery'              => 'gallery/index',
-    'gallery/index'        => 'gallery/index',
-    'gallery/{id}'         => 'gallery/single',
-    //
-    'hairdresser'          => 'hairdresser/index',
+    ''                                           => 'home/index',
+//    ''                                           => 'default/index',
+//    '<controller>/<action>/<id:[0-9]+>'          => '<controller>/<action>',
+//    '<module>/<controller>/<action>/<id:[0-9]+>' => '<module>/<controller>/<action>',
+//    '<module>/<controller>/<action>'             => '<module>/<controller>/<action>',
+//    '<controller>/<action>'                      => '<controller>/<action>',
 ];

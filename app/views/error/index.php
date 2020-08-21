@@ -6,7 +6,7 @@
 /* @var $message string */
 $this->title = $title;
 $this->params['breadcrumb'] = [];
-$this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['home/index']];
+$this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['/home/index']];
 $this->params['breadcrumb'][] = $title;
 ?>
 <section class="section">

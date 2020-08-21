@@ -12,6 +12,10 @@ class Framework {
         static::$_aliases[$name] = $value;
     }
     public static function getAlias($name) {
+        if (strncmp($name, '@', 1)) {
+            // not an alias
+            return $name;
+        }
         $key   = $name;
         $value = '';
         if (strpos($name, '/') !== false) {

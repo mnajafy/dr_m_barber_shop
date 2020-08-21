@@ -2,6 +2,7 @@
 $db    = require 'db.php';
 $rules = require 'rules.php';
 return [
+    'id'         => 'dr_m_barber_shop',
     'db'         => $db,
     'layout'     => 'page',
     'basePath'   => dirname(dirname(__DIR__)),
@@ -11,4 +12,9 @@ return [
         'class' => '\core\web\UrlManager',
         'rules' => $rules
     ],
+    'modules' => [
+        'aa' => [
+            'class' => '\app\modules\aa\Module'
+        ]
+    ]
 ];
