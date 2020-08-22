@@ -2,13 +2,22 @@
 namespace core\base;
 use Exception;
 use ArrayObject;
+use ReflectionClass;
+use ReflectionProperty;
 use core\validators\Validator;
 class Model extends BaseObject {
     /**
      * @return array
      */
     public function attributes() {
-        return [];
+        $class = new ReflectionClass($this);
+        $names = [];
+        foreach ($class->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
+            if (!$property->isStatic()) {
+                $names[] = $property->getName();
+            }
+        }
+        return $names;
     }
     /**
      * @return array

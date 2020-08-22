@@ -23,9 +23,29 @@ AppAsset::register($this);
                 <div class="navbar-collapse">
                     <ul>
                         <li>
-                            <a class="nav-link" href="<?= Url::to(['/admin/gallery-index']) ?>">
+                            <?php
+                            if (Framework::$app->user->isGuest) {
+                                ?>
+                                <a class="nav-link" href="<?= Url::to(['/auth/login']) ?>">
+                                    <i class="fas fa-user"></i>
+                                    Login
+                                </a>
+                                <?php
+                            }
+                            else {
+                                ?>
+                                <a class="nav-link" href="<?= Url::to(['/auth/logout']) ?>">
+                                    <i class="fas fa-user"></i>
+                                    Logout
+                                </a>
+                                <?php
+                            }
+                            ?>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="<?= Url::to(['/admin/users-index']) ?>">
                                 <i class="fas fa-user"></i>
-                                admin gallery
+                                admin users
                             </a>
                         </li>
                         <li>
