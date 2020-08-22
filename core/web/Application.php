@@ -1,11 +1,12 @@
 <?php
 namespace core\web;
-//use Exception;
 use Framework;
 use core\base\BaseObject;
+use core\helpers\ArrayHelper;
 /**
  * Application
  * 
+ * @property ErrorHandler $errorHandler
  * @property Request $request
  * @property Response $response
  * @property UrlManager $urlManager
@@ -30,6 +31,7 @@ class Application extends Module {
      */
     public $controller;
     //
+    private $_errorHandler;
     private $_request;
     private $_response;
     private $_urlManager;
@@ -39,136 +41,136 @@ class Application extends Module {
     private $_user;
     private $_db;
     public function __construct($config = []) {
-//        ini_set('display_errors', false);
-//        set_error_handler(function ($severity, $message, $file, $line) {
-//            for ($level = ob_get_level(); $level > 0; --$level) {
-//                if (!@ob_end_clean()) {
-//                    ob_clean();
-//                }
-//            }
-//            $response       = Framework::$app->response;
-//            $response->code = 500;
-//            $response->data = Framework::$app->runAction('error/index', ['title' => 'Error', 'file' => $file, 'line' => $line, 'message' => $message]);
-//            $response->send();
-//            exit;
-//        });
-//        set_exception_handler(function ($exception) {
-//            for ($level = ob_get_level(); $level > 0; --$level) {
-//                if (!@ob_end_clean()) {
-//                    ob_clean();
-//                }
-//            }
-//            $response       = Framework::$app->response;
-//            $response->code = 500;
-//            $response->data = Framework::$app->runAction('error/index', ['title' => 'Error', 'file' => $exception->getFile(), 'line' => $exception->getLine(), 'message' => $exception->getMessage()]);
-//            $response->send();
-//            exit;
-//        });
-//        register_shutdown_function(function () {
-//            for ($level = ob_get_level(); $level > 0; --$level) {
-//                if (!@ob_end_clean()) {
-//                    ob_clean();
-//                }
-//            }
-//            $error          = error_get_last();
-//            $response       = Framework::$app->response;
-//            $response->code = 500;
-//            $response->data = Framework::$app->runAction('error/index', [
-//                'title'   => 'Error',
-//                'file'    => $error['file'],
-//                'line'    => $error['line'],
-//                'message' => $error['message']
-//            ]);
-//            $response->send();
-//            exit;
-//        });
         Framework::$app = $this;
         $this->preInit($config);
+        $this->registerErrorHandler($config);
         parent::__construct($config);
     }
     public function preInit(&$config = []) {
         $core   = [
-            'request'    => ['class' => '\core\web\Request'],
-            'response'   => ['class' => '\core\web\Response'],
-            'urlManager' => ['class' => '\core\web\UrlManager'],
-            'session'    => ['class' => '\core\web\Session'],
-            'cookie'     => ['class' => '\core\web\Cookie'],
-            'view'       => ['class' => '\core\web\View'],
-            'user'       => ['class' => '\core\web\User'],
-            'db'         => ['class' => '\core\db\Database'],
+            'errorHandler' => ['class' => '\core\web\ErrorHandler'],
+            'request'      => ['class' => '\core\web\Request'],
+            'response'     => ['class' => '\core\web\Response'],
+            'urlManager'   => ['class' => '\core\web\UrlManager'],
+            'session'      => ['class' => '\core\web\Session'],
+            'cookie'       => ['class' => '\core\web\Cookie'],
+            'view'         => ['class' => '\core\web\View'],
+            'user'         => ['class' => '\core\web\User'],
+            'db'           => ['class' => '\core\db\Database'],
         ];
-        $config = array_merge($core, $config);
+        $config = ArrayHelper::merge($core, $config);
+    }
+    public function registerErrorHandler(&$config) {
+        $this->setErrorHandler($config['errorHandler']);
+        unset($config['errorHandler']);
+        $this->getErrorHandler()->register();
+    }
+    public function setErrorHandler($value) {
+        $this->_errorHandler = $value;
+    }
+    /**
+     * @return ErrorHandler
+     */
+    public function getErrorHandler() {
+        if (!is_object($this->_errorHandler)) {
+            $this->_errorHandler = BaseObject::createObject($this->_errorHandler);
+        }
+        return $this->_errorHandler;
     }
     public function setRequest($value) {
-        $this->_request = BaseObject::createObject($value);
+        $this->_request = $value;
     }
     /**
      * @return Request
      */
     public function getRequest() {
+        if (!is_object($this->_request)) {
+            $this->_request = BaseObject::createObject($this->_request);
+        }
         return $this->_request;
     }
     public function setResponse($value) {
-        $this->_response = BaseObject::createObject($value);
+        $this->_response = $value;
     }
     /**
      * @return Response
      */
     public function getResponse() {
+        if (!is_object($this->_response)) {
+            $this->_response = BaseObject::createObject($this->_response);
+        }
         return $this->_response;
     }
     public function setUrlManager($value) {
-        $this->_urlManager = BaseObject::createObject($value);
+        $this->_urlManager = $value;
     }
     /**
      * @return UrlManager
      */
     public function getUrlManager() {
+        if (!is_object($this->_urlManager)) {
+            $this->_urlManager = BaseObject::createObject($this->_urlManager);
+        }
         return $this->_urlManager;
     }
     public function setSession($value) {
-        $this->_session = BaseObject::createObject($value);
+        $this->_session = $value;
     }
     /**
      * @return Session
      */
     public function getSession() {
+        if (!is_object($this->_session)) {
+            $this->_session = BaseObject::createObject($this->_session);
+        }
         return $this->_session;
     }
     public function setCookie($value) {
-        $this->_cookie = BaseObject::createObject($value);
+        $this->_cookie = $value;
     }
     /**
      * @return Cookie
      */
     public function getCookie() {
+        if (!is_object($this->_cookie)) {
+            $this->_cookie = BaseObject::createObject($this->_cookie);
+        }
         return $this->_cookie;
     }
     public function setView($value) {
-        $this->_view = BaseObject::createObject($value);
+        $this->_view = $value;
     }
     /**
      * @return View
      */
     public function getView() {
+        if (!is_object($this->_view)) {
+            $this->_view = BaseObject::createObject($this->_view);
+        }
         return $this->_view;
     }
     public function setUser($value) {
-        $this->_user = BaseObject::createObject($value);
+        $this->_user = $value;
     }
     /**
      * @return User
      */
     public function getUser() {
+        if (!is_object($this->_user)) {
+            $this->_user = BaseObject::createObject($this->_user);
+        }
         return $this->_user;
     }
     public function setDb($value) {
-        $this->_db = BaseObject::createObject($value);
+        $this->_db = $value;
     }
     /**
      * @return \core\db\Database
      */
     public function getDb() {
+        if (!is_object($this->_db)) {
+            $this->_db = BaseObject::createObject($this->_db);
+        }
         return $this->_db;
     }
     //

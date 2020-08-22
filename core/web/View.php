@@ -62,4 +62,12 @@ class View extends BaseObject {
         }
         return "\n        " . implode("\n        ", $js) . "\n";
     }
+    /**
+     * 
+     */
+    public function clear() {
+        $this->title = null;
+        $this->params = [];
+        $this->assets = [];
+    }
 }

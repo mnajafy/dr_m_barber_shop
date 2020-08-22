@@ -72,7 +72,7 @@ class Controller extends BaseObject {
             $config['model'] = $params;
         }
         $viewFile = $this->getViewFile();
-        $content  = Framework::$app->view->renderFile($viewFile, $config);
+        $content  = Framework::$app->getView()->renderFile($viewFile, $config);
         return $this->renderLayout(['content' => $content]);
     }
     /**
@@ -84,7 +84,7 @@ class Controller extends BaseObject {
         if ($layoutFile === false) {
             return $params['content'];
         }
-        return Framework::$app->view->renderFile($layoutFile, $params);
+        return Framework::$app->getView()->renderFile($layoutFile, $params);
     }
     /**
      * @return string
