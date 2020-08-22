@@ -14,7 +14,9 @@ return [
     'urlManager'   => [
         'class' => '\core\web\UrlManager',
         'rules' => [
-            '' => 'home/index',
+            ''       => 'home/index',
+            'login'  => 'auth/login',
+            'logout' => 'auth/logout',
             //''                                           => 'default/index',
             //'<controller>/<action>/<id:[0-9]+>'          => '<controller>/<action>',
             //'<module>/<controller>/<action>/<id:[0-9]+>' => '<module>/<controller>/<action>',

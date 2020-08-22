@@ -51,6 +51,7 @@ class UrlRule extends BaseObject {
         else {
             $this->pattern = '/' . $this->pattern . '/';
         }
+        $matches = [];
         if (strpos($this->route, '<') !== false && preg_match_all('/<([\w._-]+)>/', $this->route, $matches)) {
             foreach ($matches[1] as $name) {
                 $this->routeParams[$name] = "<$name>";
@@ -59,10 +60,9 @@ class UrlRule extends BaseObject {
         $this->translatePattern(true);
     }
     public function translatePattern() {
-
-        $tr  = ['.' => '\\.', '*' => '\\*', '$' => '\\$', '[' => '\\[', ']' => '\\]', '(' => '\\(', ')' => '\\)'];
-        $tr2 = [];
-
+        $tr      = ['.' => '\\.', '*' => '\\*', '$' => '\\$', '[' => '\\[', ']' => '\\]', '(' => '\\(', ')' => '\\)'];
+        $tr2     = [];
+        $matches = [];
         if (preg_match_all('/<([\w._-]+):?([^>]+)?>/', $this->pattern, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER)) {
             foreach ($matches as $match) {
                 $name                             = $match[1][0];
@@ -78,10 +78,8 @@ class UrlRule extends BaseObject {
                 }
             }
         }
-
         $this->template = preg_replace('/<([\w._-]+):?([^>]+)?>/', '<$1>', $this->pattern);
         $this->pattern  = '#^' . trim(strtr($this->template, $tr), '/') . '$#u';
-
         if (!empty($this->routeParams)) {
             $this->routeRule = '#^' . strtr($this->route, $tr2) . '$#u';
         }
@@ -93,12 +91,13 @@ class UrlRule extends BaseObject {
     public function createUrl($route = '', $params = []) {
         $tr = [];
         if ($route !== $this->route) {
+            $matches = [];
             if ($this->routeRule === null || !preg_match($this->routeRule, $route, $matches)) {
                 return false;
             }
-            $matches = $this->substitutePlaceholderNames($matches);
+            $names = $this->substitutePlaceholderNames($matches);
             foreach ($this->routeParams as $name => $token) {
-                $tr[$token] = $matches[$name];
+                $tr[$token] = $names[$name];
             }
         }
         foreach ($this->paramRules as $name => $rule) {
@@ -110,25 +109,21 @@ class UrlRule extends BaseObject {
                 unset($params[$name]);
             }
         }
-        $url   = $this->trimSlashes(strtr($this->template, $tr));
-        if (!empty($params) && ($query = http_build_query($params)) !== '') {
-            $url .= '?' . $query;
-        }
-        return $url;
+        return $this->trimSlashes(strtr($this->template, $tr)) . (!empty($params) && ($query = http_build_query($params)) !== '' ? '?' . $query : '');
     }
     /**
-     * @param UrlManager $manager
-     * @param Request $request
+     * @param string $pathInfo
+     * @return array|false
      */
-    public function parseRequest($manager, $request) {
-        $pathInfo = $request->getPathInfo();
+    public function parseRequest($pathInfo) {
+        $matches = [];
         if (!preg_match($this->pattern, $pathInfo, $matches)) {
             return false;
         }
-        $matches = $this->substitutePlaceholderNames($matches);
-        $params  = [];
-        $tr      = [];
-        foreach ($matches as $name => $value) {
+        $names  = $this->substitutePlaceholderNames($matches);
+        $params = [];
+        $tr     = [];
+        foreach ($names as $name => $value) {
             if (isset($this->routeParams[$name])) {
                 $tr[$this->routeParams[$name]] = $value;
                 unset($params[$name]);
@@ -137,12 +132,7 @@ class UrlRule extends BaseObject {
                 $params[$name] = $value;
             }
         }
-        if ($this->routeRule !== null) {
-            $route = strtr($this->route, $tr);
-        }
-        else {
-            $route = $this->route;
-        }
+        $route = ($this->routeRule === null ? $this->route : strtr($this->route, $tr));
         return [$route, $params];
     }
     public function substitutePlaceholderNames($matches) {

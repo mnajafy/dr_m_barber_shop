@@ -179,7 +179,8 @@ class Application extends Module {
         $response->send();
     }
     /**
-     * @param Request $request
+     * @param Request $request Request
+     * @return Response Response
      */
     public function handleRequest($request) {
         list($route, $params) = $request->resolve();

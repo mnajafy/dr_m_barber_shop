@@ -67,7 +67,7 @@ class Request extends BaseObject {
      * @return array
      */
     public function resolve() {
-        list($route, $params) = Framework::$app->getUrlManager()->parseRequest($this);
+        list($route, $params) = Framework::$app->getUrlManager()->parseRequest($this->getPathInfo());
         $this->merge($params);
         return [$route, $this->_get];
     }

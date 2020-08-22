@@ -27,6 +27,9 @@ class Html {
             if ($value === NULL) {
                 continue;
             }
+            if (is_bool($value)) {
+                $value = $value ? 'true' : 'false';
+            }
             if (is_array($value)) {
                 $value = implode(' ', $value);
             }
@@ -114,8 +117,8 @@ class Html {
         return str_replace(['[]', '][', '[', ']', ' ', '.'], ['', '-', '-', '', '-', '-'], $name);
     }
     public static function error($model, $attribute, $options = []) {
-        $error  = $model->getFirstError($attribute);
-        $tag    = ArrayHelper::remove($options, 'tag', 'div');
+        $error = $model->getFirstError($attribute);
+        $tag   = ArrayHelper::remove($options, 'tag', 'div');
         return static::tag($tag, $error, $options);
     }
 }

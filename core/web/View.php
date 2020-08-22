@@ -1,5 +1,6 @@
 <?php
 namespace core\web;
+use Exception;
 use Framework;
 use core\base\BaseObject;
 class View extends BaseObject {
@@ -21,11 +22,14 @@ class View extends BaseObject {
      * @return string
      */
     public function renderFile($_file_, $_params_ = []) {
+        $this->_viewFiles[] = $_file_;
         ob_start();
         ob_implicit_flush(false);
         extract($_params_, EXTR_OVERWRITE);
         require $_file_;
-        return ob_get_clean();
+        $output = ob_get_clean();
+        array_pop($this->_viewFiles);
+        return $output;
     }
     /**
      * @param string $name
@@ -66,8 +70,45 @@ class View extends BaseObject {
      * 
      */
     public function clear() {
-        $this->title = null;
+        $this->title  = null;
         $this->params = [];
         $this->assets = [];
+    }
+    //
+    public function render($view, $params = []) {
+        $viewFile = $this->findViewFile($view);
+        return $this->renderFile($viewFile, $params);
+    }
+    public function findViewFile($view) {
+        if (strncmp($view, '@', 1) === 0) {
+            // e.g. "@app/views/main"
+            $file = Framework::getAlias($view);
+        }
+        elseif (strncmp($view, '//', 2) === 0) {
+            // e.g. "//layouts/main"
+            $file = Framework::$app->getViewPath() . DIRECTORY_SEPARATOR . ltrim($view, '/');
+        }
+        elseif (strncmp($view, '/', 1) === 0) {
+            // e.g. "/site/index"
+            if (Framework::$app->controller === null) {
+                throw new Exception("Unable to locate view file for view '$view': no active controller.");
+            }
+            $file = Framework::$app->controller->module->getViewPath() . DIRECTORY_SEPARATOR . ltrim($view, '/');
+        }
+        elseif (($currentViewFile = $this->getRequestedViewFile()) !== false) {
+            $file = dirname($currentViewFile) . DIRECTORY_SEPARATOR . $view;
+        }
+        else {
+            throw new Exception("Unable to resolve view file for view '$view': no active view context.");
+        }
+        $viewFile = realpath($file . '.php');
+        if ($viewFile === false) {
+            throw new Exception("View File { <b>$file.php</b> } Not Found");
+        }
+        return $file . '.php';
+    }
+    private $_viewFiles = [];
+    public function getRequestedViewFile() {
+        return empty($this->_viewFiles) ? false : end($this->_viewFiles);
     }
 }

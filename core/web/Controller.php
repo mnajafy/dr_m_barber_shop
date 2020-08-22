@@ -92,7 +92,7 @@ class Controller extends BaseObject {
     public function getViewFile() {
         $file     = $this->module->getViewPath() . DIRECTORY_SEPARATOR . $this->id . DIRECTORY_SEPARATOR . $this->action->id . '.php';
         $viewFile = realpath($file);
-        if (!is_file($viewFile)) {
+        if ($viewFile === false) {
             throw new Exception("View File { <b>{$file}</b> } Not Found");
         }
         return $viewFile;
@@ -127,7 +127,7 @@ class Controller extends BaseObject {
             $file = $module->getLayoutPath() . DIRECTORY_SEPARATOR . $layout;
         }
         $layoutFile = realpath($file . '.php');
-        if (!is_file($layoutFile)) {
+        if ($layoutFile === false) {
             throw new Exception("Layout File { <b>$file.php</b> } Not Found");
         }
         return $layoutFile;

@@ -11,13 +11,11 @@ $this->title = 'Login';
         <div class="row">
             <div class="col-4"></div>
             <div class="col-4">
-                <div style="margin: 15px;">
-                    <?php $form        = ActiveForm::begin() ?>
-                    <?= $form->field($model, 'username') ?>
-                    <?= $form->field($model, 'password') ?>
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-dark']) ?>
-                    <?php ActiveForm::end() ?>
-                </div>
+                <?php $form = ActiveForm::begin(['options' => ['style' => 'padding: 15px;']]) ?>
+                <?= $form->field($model, 'username') ?>
+                <?= $form->field($model, 'password') ?>
+                <?= Html::submitButton('Login', ['class' => 'btn btn-dark']) ?>
+                <?php ActiveForm::end() ?>
             </div>
         </div>
     </div>

@@ -5,11 +5,15 @@ class AssetBundle extends BaseObject {
     /**
      * @var array
      */
+    public $css = [];
+    /**
+     * @var array
+     */
     public $js = [];
     /**
      * @var array
      */
-    public $css = [];
+    public $depends = [];
     /**
      * @param View $view
      */

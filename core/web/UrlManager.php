@@ -4,21 +4,21 @@ use Framework;
 use core\base\BaseObject;
 /**
  * UrlManager
- * @property array $rules
+ * @property UrlRule[] $rules
  */
 class UrlManager extends BaseObject {
     /**
-     * @var array
+     * @var UrlRule[]
      */
     private $_rules  = [];
     /**
-     * @return array
+     * @return UrlRule[]
      */
     public function getRules() {
         return $this->_rules;
     }
     /**
-     * @param array $rules
+     * @param UrlRule[] $rules
      */
     public function setRules($rules) {
         $this->_rules = $rules;
@@ -56,8 +56,7 @@ class UrlManager extends BaseObject {
         unset($params[0]);
 
         $url = false;
-        foreach ($this->rules as $index => $rule) {
-            /* @var $rule UrlRule */
+        foreach ($this->getRules() as $rule) {
             $url = $rule->createUrl($route, $params);
             if ($url !== false) {
                 break;
@@ -78,17 +77,16 @@ class UrlManager extends BaseObject {
         return "$baseUrl/{$route2}{$anchor}";
     }
     /**
-     * @param Request $request
+     * @param string $pathInfo
      * @return array
      */
-    public function parseRequest($request) {
-        foreach ($this->rules as $index => $rule) {
-            $result = $rule->parseRequest($this, $request);
+    public function parseRequest($pathInfo) {
+        foreach ($this->getRules() as $index => $rule) {
+            $result = $rule->parseRequest($pathInfo);
             if ($result !== false) {
                 return $result;
             }
         }
-        $pathInfo = $request->getPathInfo();
         return [$pathInfo, []];
     }
 }
