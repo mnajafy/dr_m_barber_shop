@@ -134,7 +134,7 @@ class Controller extends BaseObject {
     }
     //
     public function getUniqueId() {
-        return $this->module instanceof Application ? $this->id : $this->module->getUniqueId() . '/' . $this->id;
+        return ltrim($this->module->getUniqueId() . '/' . $this->id, '/');
     }
     public function getRoute() {
         return $this->action !== null ? $this->action->getUniqueId() : $this->getUniqueId();

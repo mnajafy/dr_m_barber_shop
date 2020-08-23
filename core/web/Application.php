@@ -30,150 +30,45 @@ class Application extends Module {
      * @var Controller
      */
     public $controller;
-    //
-    private $_errorHandler;
-    private $_request;
-    private $_response;
-    private $_urlManager;
-    private $_session;
-    private $_cookie;
-    private $_view;
-    private $_user;
-    private $_db;
+    /**
+     * @param array $config
+     */
     public function __construct($config = []) {
         Framework::$app = $this;
         $this->preInit($config);
         $this->registerErrorHandler($config);
         parent::__construct($config);
     }
+    /**
+     * @param array $config
+     */
     public function preInit(&$config = []) {
         $core   = [
-            'errorHandler' => ['class' => '\core\web\ErrorHandler'],
-            'request'      => ['class' => '\core\web\Request'],
-            'response'     => ['class' => '\core\web\Response'],
-            'urlManager'   => ['class' => '\core\web\UrlManager'],
-            'session'      => ['class' => '\core\web\Session'],
-            'cookie'       => ['class' => '\core\web\Cookie'],
-            'view'         => ['class' => '\core\web\View'],
-            'user'         => ['class' => '\core\web\User'],
-            'db'           => ['class' => '\core\db\Database'],
+            'services' => [
+                'errorHandler' => ['class' => '\core\web\ErrorHandler'],
+                'request'      => ['class' => '\core\web\Request'],
+                'response'     => ['class' => '\core\web\Response'],
+                'urlManager'   => ['class' => '\core\web\UrlManager'],
+                'session'      => ['class' => '\core\web\Session'],
+                'cookie'       => ['class' => '\core\web\Cookie'],
+                'view'         => ['class' => '\core\web\View'],
+                'user'         => ['class' => '\core\web\User'],
+                'db'           => ['class' => '\core\db\Database'],
+            ]
         ];
         $config = ArrayHelper::merge($core, $config);
     }
+    /**
+     * @param array $config
+     */
     public function registerErrorHandler(&$config) {
-        $this->setErrorHandler($config['errorHandler']);
-        unset($config['errorHandler']);
+        $this->set('errorHandler', $config['services']['errorHandler']);
+        unset($config['services']['errorHandler']);
         $this->getErrorHandler()->register();
     }
-    public function setErrorHandler($value) {
-        $this->_errorHandler = $value;
-    }
     /**
-     * @return ErrorHandler
+     * 
      */
-    public function getErrorHandler() {
-        if (!is_object($this->_errorHandler)) {
-            $this->_errorHandler = BaseObject::createObject($this->_errorHandler);
-        }
-        return $this->_errorHandler;
-    }
-    public function setRequest($value) {
-        $this->_request = $value;
-    }
-    /**
-     * @return Request
-     */
-    public function getRequest() {
-        if (!is_object($this->_request)) {
-            $this->_request = BaseObject::createObject($this->_request);
-        }
-        return $this->_request;
-    }
-    public function setResponse($value) {
-        $this->_response = $value;
-    }
-    /**
-     * @return Response
-     */
-    public function getResponse() {
-        if (!is_object($this->_response)) {
-            $this->_response = BaseObject::createObject($this->_response);
-        }
-        return $this->_response;
-    }
-    public function setUrlManager($value) {
-        $this->_urlManager = $value;
-    }
-    /**
-     * @return UrlManager
-     */
-    public function getUrlManager() {
-        if (!is_object($this->_urlManager)) {
-            $this->_urlManager = BaseObject::createObject($this->_urlManager);
-        }
-        return $this->_urlManager;
-    }
-    public function setSession($value) {
-        $this->_session = $value;
-    }
-    /**
-     * @return Session
-     */
-    public function getSession() {
-        if (!is_object($this->_session)) {
-            $this->_session = BaseObject::createObject($this->_session);
-        }
-        return $this->_session;
-    }
-    public function setCookie($value) {
-        $this->_cookie = $value;
-    }
-    /**
-     * @return Cookie
-     */
-    public function getCookie() {
-        if (!is_object($this->_cookie)) {
-            $this->_cookie = BaseObject::createObject($this->_cookie);
-        }
-        return $this->_cookie;
-    }
-    public function setView($value) {
-        $this->_view = $value;
-    }
-    /**
-     * @return View
-     */
-    public function getView() {
-        if (!is_object($this->_view)) {
-            $this->_view = BaseObject::createObject($this->_view);
-        }
-        return $this->_view;
-    }
-    public function setUser($value) {
-        $this->_user = $value;
-    }
-    /**
-     * @return User
-     */
-    public function getUser() {
-        if (!is_object($this->_user)) {
-            $this->_user = BaseObject::createObject($this->_user);
-        }
-        return $this->_user;
-    }
-    public function setDb($value) {
-        $this->_db = $value;
-    }
-    /**
-     * @return \core\db\Database
-     */
-    public function getDb() {
-        if (!is_object($this->_db)) {
-            $this->_db = BaseObject::createObject($this->_db);
-        }
-        return $this->_db;
-    }
-    //
     public function run() {
         $response = $this->handleRequest($this->getRequest());
         $response->send();
@@ -191,5 +86,72 @@ class Application extends Module {
         $response       = $this->getResponse();
         $response->data = $result;
         return $response;
+    }
+    /**
+     * @return string
+     */
+    public function getUniqueId() {
+        return '';
+    }
+    /**
+     * @param string $path
+     */
+    public function setBasePath($path) {
+        parent::setBasePath($path);
+        Framework::setAlias('@app', $this->getBasePath());
+    }
+    /**
+     * @return ErrorHandler
+     */
+    public function getErrorHandler() {
+        return $this->get('errorHandler');
+    }
+    /**
+     * @return Request
+     */
+    public function getRequest() {
+        return $this->get('request');
+    }
+    /**
+     * @return Response
+     */
+    public function getResponse() {
+        return $this->get('response');
+    }
+    /**
+     * @return UrlManager
+     */
+    public function getUrlManager() {
+        return $this->get('urlManager');
+    }
+    /**
+     * @return Session
+     */
+    public function getSession() {
+        return $this->get('session');
+    }
+    /**
+     * @return Cookie
+     */
+    public function getCookie() {
+        return $this->get('cookie');
+    }
+    /**
+     * @return View
+     */
+    public function getView() {
+        return $this->get('view');
+    }
+    /**
+     * @return User
+     */
+    public function getUser() {
+        return $this->get('user');
+    }
+    /**
+     * @return \core\db\Database
+     */
+    public function getDb() {
+        return $this->get('db');
     }
 }

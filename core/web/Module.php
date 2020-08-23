@@ -4,10 +4,12 @@ use Exception;
 use Framework;
 use core\base\BaseObject;
 /**
- * 
+ * @property-write array $aliases
+ * @property array $modules
  * @property string $layoutPath
  * @property string $basePath
  * @property string $viewPath
+ * @property-read string $uniqueId
  */
 class Module extends Services {
     //
@@ -83,7 +85,6 @@ class Module extends Services {
     //
     public function hasModule($id) {
         if (($pos = strpos($id, '/')) !== false) {
-            // sub-module
             $module = $this->getModule(substr($id, 0, $pos));
             return $module === null ? false : $module->hasModule(substr($id, $pos + 1));
         }
@@ -91,7 +92,6 @@ class Module extends Services {
     }
     public function getModule($id) {
         if (($pos = strpos($id, '/')) !== false) {
-            // sub-module
             $module = $this->getModule(substr($id, 0, $pos));
             return $module === null ? null : $module->getModule(substr($id, $pos + 1));
         }
@@ -99,11 +99,7 @@ class Module extends Services {
             if ($this->_modules[$id] instanceof self) {
                 return $this->_modules[$id];
             }
-            $this->_modules[$id] = BaseObject::createObject(array_merge($this->_modules[$id], [
-                        'id'     => $id,
-                        'module' => $this
-            ]));
-            return $this->_modules[$id];
+            return $this->_modules[$id] = BaseObject::createObject(array_merge($this->_modules[$id], ['id' => $id, 'module' => $this]));
         }
         return null;
     }
@@ -124,6 +120,11 @@ class Module extends Services {
         }
     }
     //
+    public function setAliases($aliases) {
+        foreach ($aliases as $name => $alias) {
+            Framework::setAlias($name, $alias);
+        }
+    }
     public function setLayoutPath($value) {
         $this->_layoutPath = $value;
     }
@@ -153,6 +154,6 @@ class Module extends Services {
         return $this->_viewPath;
     }
     public function getUniqueId() {
-        return $this->module && !$this->module instanceof Application ? ltrim($this->module->getUniqueId() . '/' . $this->id, '/') : $this->id;
+        return $this->module ? ltrim($this->module->getUniqueId() . '/' . $this->id, '/') : $this->id;
     }
 }

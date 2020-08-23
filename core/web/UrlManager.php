@@ -10,7 +10,7 @@ class UrlManager extends BaseObject {
     /**
      * @var UrlRule[]
      */
-    private $_rules  = [];
+    private $_rules = [];
     /**
      * @return UrlRule[]
      */
@@ -22,6 +22,13 @@ class UrlManager extends BaseObject {
      */
     public function setRules($rules) {
         $this->_rules = $rules;
+    }
+    /**
+     * @param array $rules
+     */
+    public function addRules($rules, $append = true) {
+        $builtRules = $this->buildRules($rules);
+        $this->rules = $append ? array_merge($this->rules, $builtRules) : array_merge($builtRules, $this->rules);
     }
     /**
      * 
