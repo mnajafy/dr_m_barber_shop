@@ -106,6 +106,10 @@ class ActiveQuery extends BaseObject {
         }
         return $this->populate($rows);
     }
+    public function count($column = '*') {
+        $this->select = ["COUNT($column)"];
+        return $this->createCommand()->queryScalar();
+    }
     /**
      * @param QueryBuilder $builder
      */

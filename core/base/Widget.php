@@ -1,10 +1,11 @@
 <?php
 namespace core\base;
 use Exception;
+use Framework;
 class Widget extends BaseObject {
     private $_id;
     public static $counter      = 0;
-    public static $autoIdPrefix = 'w';
+    public static $autoIdPrefix = 'widget-';
     public static $stack        = [];
     public function init() {
         parent::init();
@@ -60,5 +61,21 @@ class Widget extends BaseObject {
             throw $e;
         }
         return ob_get_clean() . $result;
+    }
+    /**
+     * @var \core\web\View
+     */
+    private $_view;
+    /**
+     * @return \core\web\View
+     */
+    public function getView() {
+        if ($this->_view === null) {
+            $this->_view = Framework::$app->getView();
+        }
+        return $this->_view;
+    }
+    public function setView($view) {
+        $this->_view = $view;
     }
 }

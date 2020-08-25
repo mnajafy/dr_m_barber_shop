@@ -1,6 +1,7 @@
 <?php
 namespace core\helpers;
 use Exception;
+use core\helpers\Url;
 class Html {
     public static $attributeRegex = '/(^|.*\])([\w\.\+]+)(\[.*|$)/u';
     public static $voidElements   = [
@@ -120,5 +121,36 @@ class Html {
         $error = $model->getFirstError($attribute);
         $tag   = ArrayHelper::remove($options, 'tag', 'div');
         return static::tag($tag, $error, $options);
+    }
+    public static function a($text, $url = null, $options = []) {
+        if ($url !== null) {
+            $options['href'] = Url::to($url);
+        }
+        return static::tag('a', $text, $options);
+    }
+    public static function mergeCssClasses(array $existingClasses, array $additionalClasses) {
+        foreach ($additionalClasses as $key => $class) {
+            if (is_int($key) && !in_array($class, $existingClasses)) {
+                $existingClasses[] = $class;
+            }
+            elseif (!isset($existingClasses[$key])) {
+                $existingClasses[$key] = $class;
+            }
+        }
+        return array_unique($existingClasses);
+    }
+    public static function addCssClass(&$options, $class) {
+        if (isset($options['class'])) {
+            if (is_array($options['class'])) {
+                $options['class'] = self::mergeCssClasses($options['class'], (array) $class);
+            }
+            else {
+                $classes          = preg_split('/\s+/', $options['class'], -1, PREG_SPLIT_NO_EMPTY);
+                $options['class'] = implode(' ', self::mergeCssClasses($classes, (array) $class));
+            }
+        }
+        else {
+            $options['class'] = $class;
+        }
     }
 }

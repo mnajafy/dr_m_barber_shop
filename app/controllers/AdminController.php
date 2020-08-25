@@ -1,14 +1,20 @@
 <?php
 namespace app\controllers;
-use core\web\Controller;
-use app\models\Test;
-use Framework;
 use Exception;
+use Framework;
+use core\web\Controller;
+use core\data\ActiveDataProvider;
+use app\models\Test;
 class AdminController extends Controller {
     //public $layout = 'admin';
     public function actionUsersIndex() {
-        $models = Test::find()->all();
-        return $this->render(['models' => $models]);
+        $query  = Test::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'  => ['defaultOrder' => ['id' => SORT_ASC]],
+            'pagination' => ['defaultPageSize' => 5]
+        ]);
+        return $this->render(['dataProvider' => $dataProvider]);
     }
     public function actionUsersView($id) {
         $model = $this->findGalley($id);

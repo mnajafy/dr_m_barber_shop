@@ -6,15 +6,15 @@ use core\helpers\ArrayHelper;
 /**
  * Application
  * 
- * @property ErrorHandler $errorHandler
- * @property Request $request
- * @property Response $response
- * @property UrlManager $urlManager
- * @property Session $session
- * @property Cookie $cookie
- * @property View $view
- * @property User $user
- * @property \core\db\Database $db
+ * @property-read ErrorHandler $errorHandler
+ * @property-read Request $request
+ * @property-read Response $response
+ * @property-read UrlManager $urlManager
+ * @property-read Session $session
+ * @property-read Cookie $cookie
+ * @property-read View $view
+ * @property-read User $user
+ * @property-read \core\db\Database $db
  * 
  */
 class Application extends Module {

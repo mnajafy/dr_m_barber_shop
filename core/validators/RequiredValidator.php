@@ -41,10 +41,7 @@ class RequiredValidator extends Validator {
         else {
             $options['message'] = $this->message;
         }
-        if ($this->strict) {
-            $options['strict'] = 1;
-        }
-
+        $options['strict'] = ($this->strict ? 1 : 0);
         $options['message'] = $this->formatMessage($options['message'], [
             'attribute' => $model->getAttributeLabel($attribute),
         ]);
