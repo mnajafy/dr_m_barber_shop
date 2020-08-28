@@ -1,5 +1,6 @@
 <?php
-use core\helpers\Url;
+use core\helpers\Html;
+use core\widgets\DetailView;
 /* @var $this core\web\View */
 /* @var $model app\models\Test */
 $this->title                  = $model->username;
@@ -14,23 +15,19 @@ $this->params['breadcrumb'][] = $this->title;
 <div class="container">
     <br/>
     <p>
-        <a href="<?= Url::to(['users-index']) ?>" class="btn btn-dark">Return</a>
-        <a href="<?= Url::to(['users-create']) ?>" class="btn btn-brown">Create</a>
-        <a href="<?= Url::to(['users-update', 'id' => $model->id]) ?>" class="btn btn-brown">Update</a>
-        <a href="<?= Url::to(['users-delete', 'id' => $model->id]) ?>" class="btn btn-dark">Delete</a>
+        <?= Html::a('Return', ['users-index'], ['class' => 'btn btn-dark']) ?>
+        <?= Html::a('Create', ['users-create'], ['class' => 'btn btn-brown']) ?>
+        <?= Html::a('Update', ['users-update', 'id' => $model->id], ['class' => 'btn btn-brown']) ?>
+        <?= Html::a('Delete', ['users-delete', 'id' => $model->id], ['class' => 'btn btn-dark', 'data' => ['method' => 'post', 'confirm' => 'Are you sure you want to delete this item?']]) ?>
     </p>
-    <table class="table">
-        <tr>
-            <th>id</th>
-            <td><?= $model->id ?></td>
-        </tr>
-        <tr>
-            <th>username</th>
-            <td><?= $model->username ?></td>
-        </tr>
-        <tr>
-            <th>password</th>
-            <td><?= $model->password ?></td>
-        </tr>
-    </table>
+    <?= DetailView::widget([
+        'model' => $model,
+        'options' => ['class' => 'table-responsive'],
+        'tableOptions' => ['class' => 'table'],
+        'attributes' => [
+            'id',
+            'username',
+            'password',
+        ]
+    ]) ?>
 </div>

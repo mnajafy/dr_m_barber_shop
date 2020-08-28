@@ -132,13 +132,21 @@ class Controller extends BaseObject {
         }
         return $layoutFile;
     }
-    //
+    /**
+     * @return string
+     */
     public function getUniqueId() {
         return ltrim($this->module->getUniqueId() . '/' . $this->id, '/');
     }
+    /**
+     * @return string
+     */
     public function getRoute() {
         return $this->action !== null ? $this->action->getUniqueId() : $this->getUniqueId();
     }
+    /**
+     * @return Response
+     */
     public function redirect($url, $statusCode = 302) {
         return Framework::$app->getResponse()->redirect(Url::to($url), $statusCode);
     }

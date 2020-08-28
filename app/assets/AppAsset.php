@@ -12,6 +12,7 @@ class AppAsset extends AssetBundle {
     ];
     public $js  = [
         'assets/js/jquery-3.5.1/jquery.js',
+        'assets/libs/framework/framework.js',
         'assets/js/main.js',
     ];
 }

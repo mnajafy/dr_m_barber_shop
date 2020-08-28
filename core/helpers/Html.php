@@ -29,12 +29,38 @@ class Html {
                 continue;
             }
             if (is_bool($value)) {
-                $value = $value ? 'true' : 'false';
+                if ($value) {
+                    $html .= " $name";
+                }
             }
-            if (is_array($value)) {
-                $value = implode(' ', $value);
+            else if (is_array($value)) {
+                if (empty($value)) {
+                    continue;
+                }
+                if ($name === 'data') {
+                    foreach ($value as $n => $v) {
+                        if (is_array($v)) {
+                            $v = implode(' ', $v);
+                            $html  .= " $name-$n=\"$v\"";
+                        }
+                        elseif (is_bool($v)) {
+                            if ($v) {
+                                $html .= " $name-$n";
+                            }
+                        }
+                        else {
+                            $html  .= " $name-$n=\"$v\"";
+                        }
+                    }
+                }
+                else {
+                    $value = implode(' ', $value);
+                    $html  .= " $name=\"$value\"";
+                }
             }
-            $html .= " $name='$value'";
+            else {
+                $html .= " $name=\"$value\"";
+            }
         }
         return $html;
     }

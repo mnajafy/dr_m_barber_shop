@@ -10,7 +10,11 @@
 +----- Action    Column
 ------ Check Box Column
 
-- Delete Confirmation
++ Detail View
++ Delete Confirmation
+
+- Pjax
+- Page Loading
 - Client Form Validation
 - Form Items : Radio Button, Check Box, Password, File, ...
 - CSRF : Cross-site request forgery
