@@ -40,8 +40,8 @@ class Html {
                 if ($name === 'data') {
                     foreach ($value as $n => $v) {
                         if (is_array($v)) {
-                            $v = implode(' ', $v);
-                            $html  .= " $name-$n=\"$v\"";
+                            $v    = implode(' ', $v);
+                            $html .= " $name-$n=\"$v\"";
                         }
                         elseif (is_bool($v)) {
                             if ($v) {
@@ -49,7 +49,7 @@ class Html {
                             }
                         }
                         else {
-                            $html  .= " $name-$n=\"$v\"";
+                            $html .= " $name-$n=\"$v\"";
                         }
                     }
                 }
@@ -76,16 +76,6 @@ class Html {
         }
         return "</$name>";
     }
-    public static function beginForm($action = '', $method = 'post', $options = []) {
-        $options['action'] = $action;
-        $options['method'] = $method;
-        $form              = static::beginTag('form', $options);
-        // hidden inputs
-        return $form;
-    }
-    public static function endForm() {
-        return '</form>';
-    }
     public static function tag($name, $content = '', $options = []) {
         if ($name === null || $name === false) {
             return $content;
@@ -93,61 +83,7 @@ class Html {
         $html = "<$name" . static::renderTagAttributes($options);
         return isset(static::$voidElements[$name]) ? $html . '/>' : "$html>$content</$name>";
     }
-    public static function activeLabel($model, $attribute, $options = []) {
-        $content = null;
-        if (isset($options['label'])) {
-            $content = $options['label'];
-            unset($options['label']);
-        }
-        else {
-            $content = $model->getAttributeLabel($attribute);
-        }
-        return static::tag('label', $content, $options);
-    }
-    public static function activeTextInput($model, $attribute, $options = []) {
-        return static::activeInput('text', $model, $attribute, $options);
-    }
-    public static function activeInput($type, $model, $attribute, $options = []) {
-        $name  = isset($options['name']) ? $options['name'] : $attribute;
-        $value = isset($options['value']) ? $options['value'] : $model->$attribute;
-        return static::input($type, $name, $value, $options);
-    }
-    public static function input($type, $name = null, $value = null, $options = []) {
-        if (!isset($options['type'])) {
-            $options['type'] = $type;
-        }
-        $options['name']  = $name;
-        $options['value'] = $value === null ? null : (string) $value;
-        return static::tag('input', '', $options);
-    }
-    public static function submitButton($content = null, $options = []) {
-        return static::tag('button', $content, $options);
-    }
-    public static function getAttributeName($attribute) {
-        if (preg_match(static::$attributeRegex, $attribute, $matches)) {
-            return $matches[2];
-        }
-        throw new Exception('Attribute name must contain word characters only.');
-    }
-    public static function getInputName($attribute) {
-        $matches = [];
-        if (!preg_match(static::$attributeRegex, $attribute, $matches)) {
-            throw new Exception('Attribute name must contain word characters only.');
-        }
-        $_prefix    = $matches[1];
-        $_attribute = $matches[2];
-        $_suffix    = $matches[3];
-        return $_prefix . "[$_attribute]" . $_suffix;
-    }
-    public static function getInputId($attribute) {
-        $name = mb_strtolower(static::getInputName($attribute), 'UTF-8');
-        return str_replace(['[]', '][', '[', ']', ' ', '.'], ['', '-', '-', '', '-', '-'], $name);
-    }
-    public static function error($model, $attribute, $options = []) {
-        $error = $model->getFirstError($attribute);
-        $tag   = ArrayHelper::remove($options, 'tag', 'div');
-        return static::tag($tag, $error, $options);
-    }
+    //
     public static function a($text, $url = null, $options = []) {
         if ($url !== null) {
             $options['href'] = Url::to($url);
@@ -178,5 +114,109 @@ class Html {
         else {
             $options['class'] = $class;
         }
+    }
+    //
+    public static function beginForm($action = '', $method = 'post', $options = []) {
+        $options['action'] = $action;
+        $options['method'] = $method;
+        $form              = static::beginTag('form', $options);
+        // hidden inputs
+        return $form;
+    }
+    public static function endForm() {
+        return '</form>';
+    }
+    public static function submitButton($content = null, $options = []) {
+        return static::tag('button', $content, $options);
+    }
+    //
+    public static function input($type, $options = []) {
+        if (!isset($options['type'])) {
+            $options['type'] = $type;
+        }
+        return static::tag('input', '', $options);
+    }
+    public static function textarea($value, $options = []) {
+        return static::tag('textarea', $value, $options);
+    }
+    public static function dropDownList($selection = null, $items = [], $options = []) {
+        if (isset($options['multiple'])) {
+            if (substr($options['name'], -2) !== '[]') {
+                $options['name'] .= '[]';
+            }
+        }
+        $lines = [];
+        foreach ($items as $value => $content) {
+            $selected = is_array($selection) ? in_array($value, $selection) : $value == $selection;
+            $lines[]  = static::tag('option', $content, ['value' => $value, 'selected' => $selected]);
+        }
+        return static::tag('select', "\n" . implode("\n", $lines) . "\n", $options);
+    }
+    public static function checkboxList($selection = null, $items = [], $options = []) {
+        if (substr($options['name'], -2) !== '[]') {
+            $options['name'] .= '[]';
+        }
+        $lines = [];
+        foreach ($items as $value => $content) {
+            $selected = is_array($selection) ? in_array($value, $selection) : $value == $selection;
+            $lines[]  = static::input('checkbox', $options);
+        }
+        return implode("\n", $lines);
+    }
+    public static function radioList($selection = null, $items = [], $options = []) {
+        if (substr($options['name'], -2) !== '[]') {
+            $options['name'] .= '[]';
+        }
+        $lines = [];
+        foreach ($items as $value => $content) {
+            $selected = is_array($selection) ? in_array($value, $selection) : $value == $selection;
+            $lines[]  = static::input('checkbox', $options);
+        }
+        return implode("\n", $lines);
+    }
+    //
+    public static function activeError($model, $attribute, $options = []) {
+        $error = $model->getFirstError($attribute);
+        $tag   = ArrayHelper::remove($options, 'tag', 'div');
+        return static::tag($tag, $error, $options);
+    }
+    public static function activeLabel($model, $attribute, $options = []) {
+        $content = isset($options['label']) ? ArrayHelper::remove($options, 'label') : $model->getAttributeLabel($attribute);
+        return static::tag('label', $content, $options);
+    }
+    public static function validateActiveOptions($model, $attribute, &$options) {
+        if (!isset($options['id'])) {
+            $options['id'] = $attribute;
+        }
+        if (!isset($options['name'])) {
+            $options['name'] = $attribute;
+        }
+        if (!isset($options['value'])) {
+            $options['value'] = $model->$attribute;
+        }
+    }
+    public static function activeInput($type, $model, $attribute, $options = []) {
+        static::validateActiveOptions($model, $attribute, $options);
+        return static::input($type, $options);
+    }
+    public static function activeTextarea($model, $attribute, $options = []) {
+        static::validateActiveOptions($model, $attribute, $options);
+        $value = ArrayHelper::remove($options, 'value');
+        return static::textarea($value, $options);
+    }
+    public static function activeDropDownList($model, $attribute, $items = [], $options = []) {
+        static::validateActiveOptions($model, $attribute, $options);
+        $selection = ArrayHelper::remove($options, 'value');
+        return static::dropDownList($selection, $items, $options);
+    }
+    public static function activeCheckboxList($model, $attribute, $items = [], $options = []) {
+        static::validateActiveOptions($model, $attribute, $options);
+        $selection = ArrayHelper::remove($options, 'value');
+        return static::checkboxList($selection, $items, $options);
+    }
+    public static function activeRadioList($model, $attribute, $items = [], $options = []) {
+        static::validateActiveOptions($model, $attribute, $options);
+        $selection = ArrayHelper::remove($options, 'value');
+        return static::radioList($selection, $items, $options);
     }
 }

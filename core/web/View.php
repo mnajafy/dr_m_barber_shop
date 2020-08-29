@@ -11,11 +11,14 @@ class View extends BaseObject {
     /**
      * @var array
      */
-    public $params = [];
+    public $params   = [];
     /**
      * @var array
      */
-    public $assets = [];
+    public $assets   = [];
+    public $css      = [];
+    public $js       = [];
+    private $_assets = [];
     /**
      * @param string $_file_
      * @param array $_params_
@@ -27,18 +30,26 @@ class View extends BaseObject {
         ob_implicit_flush(false);
         extract($_params_, EXTR_OVERWRITE);
         require $_file_;
-        $output = ob_get_clean();
+        $output             = ob_get_clean();
         array_pop($this->_viewFiles);
         return $output;
     }
     /**
      * @param string $name
      */
+    public function registerJs($js) {
+        $this->js[] = $js;
+    }
     public function registerAssetBundle($name) {
-        if (isset($this->assets[$name])) {
+        if (isset($this->_assets[$name])) {
             return;
         }
-        $this->assets[$name] = BaseObject::createObject(['class' => $name]);
+        $this->_assets[$name] = true;
+        $asset                = BaseObject::createObject(['class' => $name]);
+        foreach ($asset->depends as $dep) {
+            $this->registerAssetBundle($dep);
+        }
+        $this->assets[$name] = $asset;
     }
     /**
      * @return string
@@ -50,6 +61,13 @@ class View extends BaseObject {
             foreach ($asset->css as $cssLink) {
                 $css[] = '<link rel="stylesheet" type="text/css" href="' . Framework::getAlias('@web/' . $cssLink) . '"/>';
             }
+        }
+        $styles = [];
+        foreach ($this->css as $style) {
+            $styles[] = $style;
+        }
+        if ($styles) {
+            $css[] = "<style>        \n" . implode("\n        ", $styles) . "\n        </style>";
         }
         return "\n        " . implode("\n        ", $css) . "\n";
     }
@@ -64,6 +82,13 @@ class View extends BaseObject {
                 $js[] = '<script type="text/javascript" src="' . Framework::getAlias('@web/' . $jsLink) . '"></script>';
             }
         }
+        $scripts = [];
+        foreach ($this->js as $script) {
+            $scripts[] = $script;
+        }
+        if ($scripts) {
+            $js[] = "<script>\n            " . implode("\n            ", $scripts) . "\n        </script>";
+        }
         return "\n        " . implode("\n        ", $js) . "\n";
     }
     /**
@@ -73,6 +98,8 @@ class View extends BaseObject {
         $this->title  = null;
         $this->params = [];
         $this->assets = [];
+        $this->css    = [];
+        $this->js     = [];
     }
     //
     public function render($view, $params = []) {

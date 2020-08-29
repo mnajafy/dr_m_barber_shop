@@ -11,8 +11,8 @@ use core\widgets\ActiveForm;
         <div class="col-4"></div>
         <div class="col-4">
             <?php $form = ActiveForm::begin(['options' => ['style' => 'padding: 15px;']]) ?>
-            <?= $form->field($model, 'username') ?>
-            <?= $form->field($model, 'password') ?>
+            <?= $form->field($model, 'username')->textInput() ?>
+            <?= $form->field($model, 'password')->textInput() ?>
             <div>
                 <a href="<?= Url::to(['users-index']) ?>" class="btn btn-dark">Return</a>
                 <?= Html::submitButton('Save', ['class' => 'btn btn-brown']) ?>

@@ -11,8 +11,10 @@ class AppAsset extends AssetBundle {
         'assets/libs/fontawesome/css/fontawesome-all.min.css',
     ];
     public $js  = [
-        'assets/js/jquery-3.5.1/jquery.js',
-        'assets/libs/framework/framework.js',
         'assets/js/main.js',
+    ];
+    public $depends = [
+        //'core\bootstrap\BootstrapAsset',
+        'core\web\FrameworkAsset',
     ];
 }

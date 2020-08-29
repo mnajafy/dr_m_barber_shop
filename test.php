@@ -42,3 +42,11 @@ class TestCls extends TestAbs implements TestInt2 {
 $a = new TestCls();
 $a->traitFunc2();
 //------------------------------------------------------------------------------
+
+$a = [];
+
+$a['c'] = false;
+$a['b'] = true;
+$a['c'] = true;
+
+var_dump($a);

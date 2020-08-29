@@ -96,4 +96,7 @@ class Validator extends BaseObject {
         return $message;
         //return Framework::$app->getI18n()->format($message, $params, Yii::$app->language);
     }
+    public function clientValidateAttribute($model, $attribute, $view) {
+        return null;
+    }
 }

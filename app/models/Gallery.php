@@ -29,7 +29,7 @@ class Gallery extends ActiveRecord {
     }
     public function getCategory() {
         if ($this->_category === null) {
-            $this->_category = Category::one($this->category_id);
+            $this->_category = Category::findOne($this->category_id);
         }
         return $this->_category;
     }

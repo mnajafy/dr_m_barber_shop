@@ -1,5 +1,6 @@
 <?php
 namespace core\validators;
+use core\helpers\Json;
 class StringValidator extends Validator {
     public $length;
     public $max;
@@ -60,7 +61,7 @@ class StringValidator extends Validator {
     public function clientValidateAttribute($model, $attribute, $view) {
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
-        return 'framework.validation.string(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'framework.validation.string(attribute, value, messages, ' . Json::encode($options) . ');';
     }
     public function getClientOptions($model, $attribute) {
         $label   = $model->getAttributeLabel($attribute);

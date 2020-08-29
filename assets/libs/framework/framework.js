@@ -1,5 +1,5 @@
 
-window.framework = (function () {
+window.framework = (function ($) {
     var pub = {
         init: function () {
             $('a').on('click', function (e) {
@@ -48,6 +48,6 @@ window.framework = (function () {
         }
     };
     return pub;
-})();
+})(jQuery);
 
 window.framework.init();

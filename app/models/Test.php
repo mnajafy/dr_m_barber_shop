@@ -15,7 +15,7 @@ class Test extends ActiveRecord {
     public function rules() {
         return [
             [['username', 'password'], 'required'],
-            [['username', 'password'], 'string', 'max' => 255],
+            [['username', 'password'], 'string', 'min' => 2, 'max' => 255],
         ];
     }
 //    public function labels() {

@@ -22,7 +22,7 @@ $this->params['breadcrumb'][] = $this->title;
         'tableOptions' => ['class' => 'table'],
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class'=> 'core\grid\SerialColumn', 'header' => '# Serial'],
+            ['class'=> 'core\grid\SerialColumn'],
             'username',
             'password',
             [

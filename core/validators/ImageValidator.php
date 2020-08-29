@@ -5,10 +5,10 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\validators;
+namespace core\validators;
 
-use Yii;
-use yii\web\UploadedFile;
+//use Yii;
+//use yii\web\UploadedFile;
 
 /**
  * ImageValidator verifies if an attribute is receiving a valid image.

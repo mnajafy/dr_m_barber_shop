@@ -1,5 +1,6 @@
 <?php
 namespace core\validators;
+use core\helpers\Json;
 class RequiredValidator extends Validator {
     public $requiredValue;
     public $strict = false;
@@ -27,8 +28,7 @@ class RequiredValidator extends Validator {
     public function clientValidateAttribute($model, $attribute, $view) {
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
-
-        return 'framework.validation.required(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'framework.validation.required(attribute, value, messages, ' . Json::encode($options) . ');';
     }
     public function getClientOptions($model, $attribute) {
         $options = [];

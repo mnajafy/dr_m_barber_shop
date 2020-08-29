@@ -105,8 +105,8 @@ class CompareValidator extends Validator {
         else {
             $compareAttribute                = $this->compareAttribute === null ? $attribute . '_repeat' : $this->compareAttribute;
             $compareValue                    = $model->getAttributeLabel($compareAttribute);
-            $options['compareAttribute']     = Html::getInputId($compareAttribute);
-            $options['compareAttributeName'] = Html::getInputName($compareAttribute);
+//            $options['compareAttribute']     = Html::getInputId($compareAttribute);
+//            $options['compareAttributeName'] = Html::getInputName($compareAttribute);
             $compareLabel                    = $compareValueOrAttribute         = $model->getAttributeLabel($compareAttribute);
         }
         $options['message'] = $this->formatMessage($this->message, [

@@ -4,20 +4,23 @@
 +-- Sort
 
 + Grid View
+--- Pjax
+--- Filter
 +-- Column
-+----- Serial    Column
-+----- Data      Column
-+----- Action    Column
------- Check Box Column
++---- Serial    Column
++---- Data      Column
++---- Action    Column
+----- Check Box Column
 
 + Detail View
 + Delete Confirmation
-
-- Pjax
-- Page Loading
-- Client Form Validation
++ Jquery Asset
++ Bootstrap Asset
++ Client Form Validation
 - Form Items : Radio Button, Check Box, Password, File, ...
+- Translations
 - CSRF : Cross-site request forgery
 - User Permissions
+- Page Loading
 - Code Generator CRUD
 - 

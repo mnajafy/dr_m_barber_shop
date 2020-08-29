@@ -1,6 +1,8 @@
 <?php
 namespace core\validators;
 use core\helpers\StringHelper;
+use core\helpers\Json;
+use core\web\JsExpression;
 class NumberValidator extends Validator {
     public $integerOnly    = false;
     public $max;
@@ -45,7 +47,7 @@ class NumberValidator extends Validator {
     public function clientValidateAttribute($model, $attribute, $view) {
         ValidationAsset::register($view);
         $options = $this->getClientOptions($model, $attribute);
-        return 'framework.validation.number(value, messages, ' . json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ');';
+        return 'framework.validation.number(value, messages, ' . Json::encode($options) . ');';
     }
     public function getClientOptions($model, $attribute) {
         $label   = $model->getAttributeLabel($attribute);

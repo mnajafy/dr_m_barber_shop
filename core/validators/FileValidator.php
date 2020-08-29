@@ -1,12 +1,12 @@
 <?php
-namespace yii\validators;
-use Yii;
-use yii\helpers\FileHelper;
-use yii\helpers\Html;
-use yii\helpers\Json;
-use yii\helpers\StringHelper;
-use yii\web\JsExpression;
-use yii\web\UploadedFile;
+namespace core\validators;
+//use Yii;
+//use yii\helpers\FileHelper;
+//use yii\helpers\Html;
+//use yii\helpers\Json;
+//use yii\helpers\StringHelper;
+//use yii\web\JsExpression;
+//use yii\web\UploadedFile;
 class FileValidator extends Validator {
     public $extensions;
     public $checkExtensionByMimeType = true;
