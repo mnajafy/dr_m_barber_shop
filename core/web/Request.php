@@ -15,6 +15,7 @@ use core\base\BaseObject;
  * @property-read string $scriptFile
  */
 class Request extends BaseObject {
+    public $enableCsrfValidation = true;
     private $_get;
     private $_post;
     private $_files;
@@ -171,5 +172,44 @@ class Request extends BaseObject {
     }
     public function setScriptFile($value) {
         $this->_scriptFile = $value;
+    }
+    //
+    public $csrfParam = '_csrf';
+    private $_csrfToken;
+    protected function loadCsrfToken() {
+        return Framework::$app->getSession()->get($this->csrfParam);
+    }
+    protected function generateCsrfToken() {
+        $token = Framework::$app->getSecurity()->generateRandomString();
+        Framework::$app->getSession()->set($this->csrfParam, $token);
+        return $token;
+    }
+    protected function validateCsrfTokenInternal($clientSuppliedToken, $trueToken) {
+        if (!is_string($clientSuppliedToken)) {
+            return false;
+        }
+        $security = Framework::$app->getSecurity();
+        return $security->compareString($security->unmaskToken($clientSuppliedToken), $security->unmaskToken($trueToken));
+    }
+    public function getCsrfToken($regenerate = false) {
+        if ($this->_csrfToken === null || $regenerate) {
+            $token = $this->loadCsrfToken();
+            if ($regenerate || empty($token)) {
+                $token = $this->generateCsrfToken();
+            }
+            $this->_csrfToken = Framework::$app->getSecurity()->maskToken($token);
+        }
+        return $this->_csrfToken;
+    }
+    public function validateCsrfToken($clientSuppliedToken = null) {
+        $method = $this->getMethod();
+        if (!$this->enableCsrfValidation || in_array($method, ['GET', 'HEAD', 'OPTIONS'], true)) {
+            return true;
+        }
+        $trueToken = $this->getCsrfToken();
+        if ($clientSuppliedToken !== null) {
+            return $this->validateCsrfTokenInternal($clientSuppliedToken, $trueToken);
+        }
+        return $this->validateCsrfTokenInternal($this->post($this->csrfParam), $trueToken);
     }
 }

@@ -17,9 +17,10 @@
 + Jquery Asset
 + Bootstrap Asset
 + Client Form Validation
-- Form Items : Radio Button, Check Box, Password, File, ...
-- Translations
-- CSRF : Cross-site request forgery
++ Form Items : Radio Button, Check Box, Password, File, ...
++ Translations
++ Security
++ CSRF : Cross-site request forgery
 - User Permissions
 - Page Loading
 - Code Generator CRUD

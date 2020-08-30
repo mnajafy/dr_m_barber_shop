@@ -6,6 +6,10 @@ use Framework;
 use core\base\BaseObject;
 class ErrorHandler extends BaseObject {
     public $errorAction;
+    /**
+     * @var Exception|null
+     */
+    public $exception;
     public function register() {
         ini_set('display_errors', false);
         set_exception_handler([$this, 'handleException']);
@@ -22,6 +26,7 @@ class ErrorHandler extends BaseObject {
         restore_exception_handler();
     }
     public function handleException($exception) {
+        $this->exception = $exception;
         try {
             $this->unregister();
             if (Framework::$app->getView() !== null) {
@@ -36,6 +41,7 @@ class ErrorHandler extends BaseObject {
         catch (Throwable $e) {
             $this->handleFallbackExceptionMessage($e, $exception);
         }
+        $this->exception = null;
         exit(1);
     }
     public function handleHhvmError($code, $message, $file, $line, $context, $backtrace) {

@@ -29,4 +29,14 @@ class Framework {
         }
         return null;
     }
+    public static function t($category, $message, $params = [], $language = null) {
+        if (static::$app !== null) {
+            return static::$app->getI18n()->translate($category, $message, $params, $language ?: static::$app->language);
+        }
+        $placeholders = [];
+        foreach ((array) $params as $name => $value) {
+            $placeholders['{' . $name . '}'] = $value;
+        }
+        return ($placeholders === []) ? $message : strtr($message, $placeholders);
+    }
 }

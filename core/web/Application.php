@@ -1,11 +1,13 @@
 <?php
 namespace core\web;
 use Framework;
-use core\base\BaseObject;
+use core\i18n\I18N;
+use core\db\Database;
 use core\helpers\ArrayHelper;
 /**
  * Application
  * 
+ * @property-read I18N $i18n
  * @property-read ErrorHandler $errorHandler
  * @property-read Request $request
  * @property-read Response $response
@@ -14,7 +16,8 @@ use core\helpers\ArrayHelper;
  * @property-read Cookie $cookie
  * @property-read View $view
  * @property-read User $user
- * @property-read \core\db\Database $db
+ * @property-read Database $db
+ * @property-read Security $security
  * 
  */
 class Application extends Module {
@@ -31,6 +34,10 @@ class Application extends Module {
      */
     public $controller;
     /**
+     * @var string
+     */
+    public $language            = 'fa-IR';
+    /**
      * @param array $config
      */
     public function __construct($config = []) {
@@ -45,6 +52,7 @@ class Application extends Module {
     public function preInit(&$config = []) {
         $core   = [
             'services' => [
+                'i18n'         => ['class' => '\core\i18n\I18n'],
                 'errorHandler' => ['class' => '\core\web\ErrorHandler'],
                 'request'      => ['class' => '\core\web\Request'],
                 'response'     => ['class' => '\core\web\Response'],
@@ -54,6 +62,7 @@ class Application extends Module {
                 'view'         => ['class' => '\core\web\View'],
                 'user'         => ['class' => '\core\web\User'],
                 'db'           => ['class' => '\core\db\Database'],
+                'security'     => ['class' => '\core\web\Security'],
             ]
         ];
         $config = ArrayHelper::merge($core, $config);
@@ -99,6 +108,12 @@ class Application extends Module {
     public function setBasePath($path) {
         parent::setBasePath($path);
         Framework::setAlias('@app', $this->getBasePath());
+    }
+    /**
+     * @return I18N
+     */
+    public function getI18n() {
+        return $this->get('i18n');
     }
     /**
      * @return ErrorHandler
@@ -149,9 +164,15 @@ class Application extends Module {
         return $this->get('user');
     }
     /**
-     * @return \core\db\Database
+     * @return Database
      */
     public function getDb() {
         return $this->get('db');
+    }
+    /**
+     * @return Security
+     */
+    public function getSecurity() {
+        return $this->get('security');
     }
 }

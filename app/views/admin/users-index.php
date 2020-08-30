@@ -4,8 +4,8 @@ use core\helpers\Html;
 use core\grid\GridView;
 /* @var $this core\web\View */
 /* @var $dataProvider \core\data\ActiveDataProvider */
-$this->title                  = 'Users';
-$this->params['breadcrumb'][] = ['label' => 'Home', 'url' => ['/home/index']];
+$this->title                  = Framework::t('app', 'Users');
+$this->params['breadcrumb'][] = ['label' => Framework::t('app', 'Home'), 'url' => ['/home/index']];
 $this->params['breadcrumb'][] = $this->title;
 ?>
 <style>
@@ -15,7 +15,7 @@ $this->params['breadcrumb'][] = $this->title;
 <div class="container">
     <br/>
     <p>
-        <?= Html::a('Create', ['users-create'], ['class' => 'btn btn-dark'])?>
+        <?= Html::a(Framework::t('app', 'Create'), ['users-create'], ['class' => 'btn btn-dark'])?>
     </p>
     <?= GridView::widget([
         'options' => ['class' => 'table-responsive', 'style' => 'margin-bottom: 15px'],
@@ -25,7 +25,7 @@ $this->params['breadcrumb'][] = $this->title;
             ['class'=> 'core\grid\SerialColumn'],
             'username',
             'password',
-            [
+            [ 
                 'class'=> 'core\grid\ActionColumn',
                 'buttonOptions' => ['class' => 'btn btn-brown'],
                 'urlCreator' => function ($name, $model, $key, $index, $actionColumn) {

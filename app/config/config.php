@@ -14,8 +14,13 @@ return [
     ],
     'services'   => [
         'db'           => $db,
-        'errorHandler' => [
-            'errorAction' => 'default/error',
+        'i18n'         => [
+            'translations' => [
+                'app' => [
+                    'class'    => 'core\i18n\PhpMessageSource',
+                    'basePath' => '@app/app/translations'
+                ]
+            ]
         ],
         'urlManager'   => [
             'class' => '\core\web\UrlManager',
@@ -23,12 +28,18 @@ return [
                 ''       => 'home/index',
                 'login'  => 'auth/login',
                 'logout' => 'auth/logout',
-            //''                                           => 'default/index',
-            //'<controller>/<action>/<id:[0-9]+>'          => '<controller>/<action>',
-            //'<module>/<controller>/<action>/<id:[0-9]+>' => '<module>/<controller>/<action>',
-            //'<module>/<controller>/<action>'             => '<module>/<controller>/<action>',
-            //'<controller>/<action>'                      => '<controller>/<action>',
+                //''                                           => 'default/index',
+                //'<controller>/<action>/<id:[0-9]+>'          => '<controller>/<action>',
+                //'<module>/<controller>/<action>/<id:[0-9]+>' => '<module>/<controller>/<action>',
+                //'<module>/<controller>/<action>'             => '<module>/<controller>/<action>',
+                //'<controller>/<action>'                      => '<controller>/<action>',
             ]
+        ],
+        'errorHandler' => [
+            'errorAction' => 'default/error',
+        ],
+        'request' => [
+            'csrfParam' => $appID . '_csrf',
         ],
         'session'      => [
             'name'         => $appID . '_phpsessid',

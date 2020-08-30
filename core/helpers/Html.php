@@ -1,6 +1,6 @@
 <?php
 namespace core\helpers;
-use Exception;
+use Framework;
 use core\helpers\Url;
 class Html {
     public static $attributeRegex = '/(^|.*\])([\w\.\+]+)(\[.*|$)/u';
@@ -120,7 +120,10 @@ class Html {
         $options['action'] = $action;
         $options['method'] = $method;
         $form              = static::beginTag('form', $options);
-        // hidden inputs
+        $request           = Framework::$app->getRequest();
+        if ($request->enableCsrfValidation && strcasecmp($method, 'post') === 0) {
+            $form .= static::input('hidden', ['name' => $request->csrfParam, 'value' => $request->getCsrfToken()]);
+        }
         return $form;
     }
     public static function endForm() {

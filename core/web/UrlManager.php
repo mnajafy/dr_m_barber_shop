@@ -73,7 +73,7 @@ class UrlManager extends BaseObject {
         $baseUrl = Framework::$app->getRequest()->getBaseUrl();
         if ($url !== false) {
             $url = ltrim($url, '/');
-            return "$baseUrl/{$url}{$anchor}";
+            return "{$baseUrl}/{$url}{$anchor}";
         }
 
         if (!empty($params) && ($query = http_build_query($params)) !== '') {
@@ -81,7 +81,7 @@ class UrlManager extends BaseObject {
         }
 
         $route2 = ltrim($route, '/');
-        return "$baseUrl/{$route2}{$anchor}";
+        return "{$baseUrl}/{$route2}{$anchor}";
     }
     /**
      * @param string $pathInfo

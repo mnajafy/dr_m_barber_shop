@@ -27,11 +27,21 @@ class Controller extends BaseObject {
      */
     public $defaultAction = 'index';
     /**
+     * @var bool
+     */
+    public $enableCsrfValidation = true;
+    /**
      * 
      */
     public function runAction($actionID, $params) {
         $this->action = $this->createAction($actionID);
+        $this->beforeAction();
         return $this->action->run($params);
+    }
+    public function beforeAction() {
+        if ($this->enableCsrfValidation && Framework::$app->getErrorHandler()->exception === null && !Framework::$app->getRequest()->validateCsrfToken()) {
+            throw new Exception(Framework::t('app', 'Unable to verify your data submission.'));
+        }
     }
     /**
      * @param string $actionID
