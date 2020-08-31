@@ -4,6 +4,9 @@ use Closure;
 use core\helpers\Html;
 use core\base\BaseObject;
 class Column extends BaseObject {
+    /**
+     * @var GridView
+     */
     public $grid;
     public $header;
     public $content;

@@ -5,7 +5,6 @@
 
 + Grid View
 --- Pjax
---- Filter
 +-- Column
 +---- Serial    Column
 +---- Data      Column

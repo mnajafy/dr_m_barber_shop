@@ -5,6 +5,8 @@ use core\db\ActiveQuery;
 use core\helpers\ArrayHelper;
 use core\data\ActiveDataProvider;
 class DataColumn extends Column {
+    public $sortLinkOptions = [];
+    public $enableSorting = true;
     public $attribute;
     public $label;
     public $value;
@@ -13,7 +15,18 @@ class DataColumn extends Column {
         if ($this->header !== null || $this->label === null && $this->attribute === null) {
             return parent::renderHeaderCellContent();
         }
-        return $this->getHeaderCellLabel();
+
+        $label = $this->getHeaderCellLabel();
+        
+        if (
+                $this->attribute !== null &&
+                $this->enableSorting &&
+                ($sort = $this->grid->dataProvider->getSort()) !== false
+        ) {
+            return $sort->link($this->attribute, array_merge($this->sortLinkOptions, ['label' => $label]));
+        }
+
+        return $label;
     }
     public function getHeaderCellLabel() {
 
@@ -45,11 +58,11 @@ class DataColumn extends Column {
             }
             return call_user_func($this->value, $model, $key, $index, $this);
         }
-        
+
         if ($this->attribute !== null) {
             return ArrayHelper::getValue($model, $this->attribute);
         }
-        
+
         return null;
     }
     public function renderDataCellContent($model, $key, $index) {
